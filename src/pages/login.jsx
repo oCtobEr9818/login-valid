@@ -1,85 +1,128 @@
 import { useState } from "react";
-import axios from "axios";
-import { Input, Button } from "@geist-ui/core";
+import { Link } from "react-router-dom";
 
-import { Layout } from "../components/layout";
+import useAuthContext from "../context/AuthContext";
 
-export default function Login() {
-  const [userName, setUserName] = useState("");
-  const [account, setAccount] = useState("");
+const Login = () => {
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isLogin, setIsLogin] = useState(false);
+  const { login, errors } = useAuthContext();
 
-  const handleSubmit = async () => {
-    await axios
-      .get("http://127.0.0.1:8000/sanctum/csrf-cookie")
-      .then((response) => {
-        const logined = axios.post("http://127.0.0.1:8000/login", {
-          headers: {
-            "Content-Type": "application/json",
-            "X-CSRF-TOKEN": "meta[name='csrf-token']",
-          },
-          data: JSON.stringify({
-            username: userName,
-            account: account,
-            password: password,
-          }),
-        });
+  const handleLogin = async (e) => {
+    e.preventDefault();
 
-        if (isLogin) {
-          window.location.href = "/login/isLogin";
-        }
-
-        if (logined.status === 200 || logined.status === 204) {
-          console.log(logined);
-          // setIsLogin(true);
-        } else if (logined.status === 404) {
-          console.log(logined);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-        alert("帳號密碼有誤!");
-      });
+    login({ email, password });
   };
 
   return (
-    <Layout>
-      <div className="Login">
-        <div className="input-wrap">
-          <span>使用者名稱：</span>
+    <>
+      <section className="bg-[#F4F7FF] py-20 lg:py-[120px]">
+        <div className="container mx-auto">
+          <div className="-mx-4 flex flex-wrap">
+            <div className="w-full px-4">
+              <div className="relative mx-auto max-w-[525px] overflow-hidden rounded-lg bg-white py-16 px-10 text-center sm:px-12 md:px-[60px]">
+                <div className="mb-10 text-center md:mb-16">帳號登入</div>
 
-          <Input
-            value={userName}
-            onChange={(e) => setUserName(e.target.value)}
-            placeholder="請輸入使用者名稱"
-          />
+                <form onSubmit={handleLogin}>
+                  <div className="mb-4">
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="電子信箱"
+                      className="
+                        bordder-[#E9EDF4]
+                        w-full
+                        rounded-md
+                        border
+                        bg-[#FCFDFE]
+                        py-3
+                        px-5
+                        text-base text-body-color
+                        placeholder-[#ACB6BE]
+                        outline-none
+                        focus:border-primary
+                        focus-visible:shadow-none
+                      "
+                    />
+                    <div className="flex">
+                      {errors.email && (
+                        <span className="text-red-400 text-sm m-2 p-2">
+                          {errors.email[0]}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                  <div className="mb-4">
+                    <input
+                      type="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder="密碼"
+                      className="
+                        bordder-[#E9EDF4]
+                        w-full
+                        rounded-md
+                        border
+                        bg-[#FCFDFE]
+                        py-3
+                        px-5
+                        text-base text-body-color
+                        placeholder-[#ACB6BE]
+                        outline-none
+                        focus:border-primary
+                        focus-visible:shadow-none
+                      "
+                    />
+                    <div className="flex">
+                      {errors.password && (
+                        <span className="text-red-400 text-sm m-2 p-2">
+                          {errors.password[0]}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                  <div className="mb-10">
+                    <button
+                      type="submit"
+                      className="
+                        w-full
+                        px-4
+                        py-3
+                        bg-indigo-500
+                        hover:bg-indigo-700
+                        rounded-md
+                        text-white
+                      "
+                    >
+                      登入
+                    </button>
+                  </div>
+                </form>
+                <Link
+                  to="/forgot-password"
+                  className="
+                    mb-2
+                    inline-block
+                    text-base text-[#adadad]
+                    hover:text-primary hover:underline
+                  "
+                >
+                  忘記密碼?
+                </Link>
+                <p className="text-base text-[#adadad]">
+                  還沒註冊嗎?
+                  <Link to="/register" className="text-primary hover:underline">
+                    立即註冊
+                  </Link>
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
-
-        <div className="input-wrap">
-          <span>信箱：</span>
-
-          <Input
-            value={account}
-            onChange={(e) => setAccount(e.target.value)}
-            placeholder="請輸入帳號"
-          />
-        </div>
-
-        <div className="input-wrap">
-          <span>密碼：</span>
-
-          <Input.Password
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="請輸入密碼"
-          />
-        </div>
-
-        <Button auto type="success-light" onClick={handleSubmit}>
-          登入
-        </Button>
-      </div>
-    </Layout>
+      </section>
+    </>
   );
-}
+};
+
+export default Login;

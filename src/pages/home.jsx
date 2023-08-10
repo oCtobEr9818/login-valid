@@ -1,9 +1,11 @@
-import { Layout } from "../components/layout";
+import MapChart from "../components/MapChart";
 
-export default function Home() {
+const Home = () => {
   return (
-    <Layout>
-      <div className="home">首頁</div>
-    </Layout>
+    <div className="max-w-full w-2/3 m-auto relative">
+      <MapChart />
+    </div>
   );
-}
+};
+
+export default Home;
