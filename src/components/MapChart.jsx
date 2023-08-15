@@ -140,6 +140,7 @@ const MapChart = () => {
                     >
                       {projectName}
                     </text>
+                    {/* 分隔線 */}
                     <line
                       x1={cardCoordinates.line.xStart}
                       y1={cardCoordinates.line.yStart}

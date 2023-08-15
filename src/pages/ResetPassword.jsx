@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useSearchParams, useParams, Link } from "react-router-dom";
 
 import useAuthContext from "../context/AuthContext";
-import axios from "../api/axios";
+import axios from "../api/loginValidApi";
 
 const ResetPassword = () => {
   const [email, setEmail] = useState("");

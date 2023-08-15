@@ -21,6 +21,9 @@ module.exports = {
       height: {
         eticaLogo: "4.2rem",
       },
+      boxShadow: {
+        sideBar: "5px 0 5px rgba(0, 0, 0, 0.7)",
+      },
     },
   },
   plugins: [],

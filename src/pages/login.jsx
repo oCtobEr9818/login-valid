@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import useAuthContext from "../context/AuthContext";
@@ -6,10 +6,27 @@ import useAuthContext from "../context/AuthContext";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isChecked, setIsChecked] = useState(false);
   const { login, errors } = useAuthContext();
+
+  useEffect(() => {
+    if (localStorage.rememberEmail && localStorage.email !== "") {
+      setIsChecked(true);
+      setEmail(localStorage.email);
+    }
+  }, []);
 
   const handleLogin = async (e) => {
     e.preventDefault();
+
+    // 記住帳號
+    if (isChecked && email !== "") {
+      localStorage.email = email;
+      localStorage.rememberEmail = isChecked;
+    } else {
+      localStorage.removeItem("email");
+      localStorage.removeItem("rememberEmail");
+    }
 
     login({ email, password });
   };
@@ -82,6 +99,23 @@ const Login = () => {
                       )}
                     </div>
                   </div>
+
+                  <div className="pl-2 mb-6 text-left">
+                    <input
+                      id="rememberEmail"
+                      type="checkbox"
+                      checked={isChecked}
+                      onChange={(e) => setIsChecked(e.target.checked)}
+                      className="w-4 h-4 align-middle"
+                    />
+                    <label
+                      htmlFor="rememberEmail"
+                      className="ml-2 align-middle select-none"
+                    >
+                      記住帳號
+                    </label>
+                  </div>
+
                   <div className="mb-10">
                     <button
                       type="submit"
@@ -89,9 +123,9 @@ const Login = () => {
                         w-full
                         px-4
                         py-3
+                        rounded-md
                         bg-indigo-500
                         hover:bg-indigo-700
-                        rounded-md
                         text-white
                       "
                     >
@@ -105,14 +139,19 @@ const Login = () => {
                     mb-2
                     inline-block
                     text-base text-[#adadad]
-                    hover:text-primary hover:underline
+                    hover:text-primary
+                    hover:text-red-600
+                    hover:underline
                   "
                 >
                   忘記密碼?
                 </Link>
                 <p className="text-base text-[#adadad]">
                   還沒註冊嗎?
-                  <Link to="/register" className="text-primary hover:underline">
+                  <Link
+                    to="/register"
+                    className="text-primary hover:underline hover:text-red-600"
+                  >
                     立即註冊
                   </Link>
                 </p>

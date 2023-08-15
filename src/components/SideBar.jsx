@@ -27,7 +27,7 @@ const navs = [
 const SideBar = () => {
   return (
     <>
-      <div className="sideBar w-64 min-h-screen bg-sideBar border-r border-gray-300 shadow-lg">
+      <div className="sideBar w-64 min-h-screen bg-sideBar border-r shadow-sideBar">
         <img
           src="./image/logo.png"
           alt="明曜科技Logo"
@@ -39,7 +39,7 @@ const SideBar = () => {
             <Link
               to={nav.url}
               key={i}
-              className=" px-0 py-3 mt-4 block border border-options rounded-lg text-center text-options bg-options hover:text-options_hover hover:bg-options_hover transition-all duration-300"
+              className=" px-0 py-2 mt-4 block border border-options rounded-lg text-center text-options bg-options hover:text-options_hover hover:bg-options_hover transition-all duration-300"
             >
               {nav.name}
             </Link>

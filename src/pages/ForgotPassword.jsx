@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import useAuthContext from "../context/AuthContext";
-import axios from "../api/axios";
+import axios from "../api/loginValidApi";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");

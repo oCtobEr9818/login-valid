@@ -1,7 +1,8 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import axios from "../api/axios";
+import axios from "../api/loginValidApi";
+import Loading from "../components/Loading";
 
 const AuthContext = createContext({});
 
@@ -80,7 +81,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   return (

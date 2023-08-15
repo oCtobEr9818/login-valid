@@ -2,6 +2,7 @@ import { Navigate, Outlet } from "react-router-dom";
 import useAuthContext from "../context/AuthContext";
 import Nav from "../components/Nav";
 import SideBar from "../components/SideBar";
+import Footer from "../components/Footer";
 
 const AuthLayout = () => {
   const { user } = useAuthContext();
@@ -13,6 +14,7 @@ const AuthLayout = () => {
       <div className="flex flex-col w-full bg-white">
         <Nav />
         <Outlet />
+        <Footer />
       </div>
     </div>
   ) : (
