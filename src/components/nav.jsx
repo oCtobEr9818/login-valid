@@ -43,7 +43,7 @@ const Nav = () => {
             {isNoticeOpen && (
               <ul
                 id="notice"
-                className={`w-60 z-20 border-1 rounded-t-lg shadow  absolute right-40 top-16 text-sm text-center`}
+                className={`w-60 z-20 border-1 rounded-t-lg shadow-lg absolute right-40 top-16 text-sm text-center`}
                 aria-labelledby="noticeDefaultButton"
               >
                 <li className="bg-blue-600 text-slate-100 rounded-t-lg">
@@ -52,14 +52,14 @@ const Nav = () => {
                   </span>
                 </li>
                 <li>
-                  <span className="w-full inline-block px-2 py-3 mx-auto border-t-1 dark:hover:bg-gray-200 cursor-pointer transition-all duration-200">
+                  <span className="w-full inline-block px-2 py-3 mx-auto bg-white dark:hover:bg-blue-200 cursor-pointer transition-all duration-200">
                     尚無通知
                   </span>
                 </li>
                 <li>
                   <Link
                     to="/event-viewer"
-                    className="w-full inline-block px-2 py-3 mx-auto border-t-1 dark:hover:bg-gray-200  cursor-pointer transition-all duration-200"
+                    className="w-full inline-block px-2 py-3 mx-auto border-t-1 dark:hover:bg-blue-200  cursor-pointer transition-all duration-200"
                   >
                     顯示所有通知
                   </Link>

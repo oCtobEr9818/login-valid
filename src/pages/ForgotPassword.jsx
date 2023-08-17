@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import useAuthContext from "../context/AuthContext";
 import axios from "../api/loginValidApi";
+import Input from "../components/Input";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
@@ -54,27 +55,15 @@ const ForgotPassword = () => {
                 輸入電子信箱，我們將發送新的密碼給您！
               </div>
               <form onSubmit={handleSubmit}>
-                <div className="mb-4">
-                  <input
+                <div className="mb-4 relative">
+                  <Input
+                    id="email"
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="電子信箱"
-                    className="
-                    bordder-[#E9EDF4]
-                    w-full
-                    rounded-md
-                    border
-                    bg-[#FCFDFE]
-                    py-3
-                    px-5
-                    text-base text-body-color
-                    placeholder-[#ACB6BE]
-                    outline-none
-                    focus:border-primary
-                    focus-visible:shadow-none
-                  "
+                    label="電子信箱"
                   />
+
                   <div className="flex">
                     {errors.email && (
                       <span className="text-red-400 text-sm m-2 p-2">

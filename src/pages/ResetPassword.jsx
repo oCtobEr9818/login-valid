@@ -3,13 +3,14 @@ import { useSearchParams, useParams, Link } from "react-router-dom";
 
 import useAuthContext from "../context/AuthContext";
 import axios from "../api/loginValidApi";
+import Input from "../components/Input";
 
 const ResetPassword = () => {
   const [email, setEmail] = useState("");
   const [errors, setErrors] = useState([]);
   const [status, setStatus] = useState(null);
   const [password, setPassword] = useState("");
-  const [password_confirmation, setPasswordConfirmation] = useState("");
+  const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [searchParams] = useSearchParams();
   const { token } = useParams();
 
@@ -30,7 +31,7 @@ const ResetPassword = () => {
         email,
         token,
         password,
-        password_confirmation,
+        passwordConfirmation,
       });
       setStatus(response.data.status);
     } catch (err) {
@@ -47,18 +48,18 @@ const ResetPassword = () => {
           <div className="w-full px-4">
             <div
               className="
-              relative
-              mx-auto
-              max-w-[525px]
-              overflow-hidden
-              rounded-lg
-              bg-white
-              py-16
-              px-10
-              text-center
-              sm:px-12
-              md:px-[60px]
-            "
+                relative
+                mx-auto
+                max-w-[525px]
+                overflow-hidden
+                rounded-lg
+                bg-white
+                py-16
+                px-10
+                text-center
+                sm:px-12
+                md:px-[60px]
+              "
             >
               {status && (
                 <div className="bg-green-700 m-2 p-2 rounded text-white">
@@ -71,26 +72,14 @@ const ResetPassword = () => {
               <div className="mb-10 text-center md:mb-16">輸入新的密碼</div>
               <form onSubmit={handleSubmit}>
                 <div className="mb-4">
-                  <input
+                  <Input
+                    id="password"
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    placeholder="密碼"
-                    className="
-                bordder-[#E9EDF4]
-                w-full
-                rounded-md
-                border
-                bg-[#FCFDFE]
-                py-3
-                px-5
-                text-base text-body-color
-                placeholder-[#ACB6BE]
-                outline-none
-                focus:border-primary
-                focus-visible:shadow-none
-              "
+                    label="密碼"
                   />
+
                   <div className="flex">
                     {errors.password && (
                       <span className="text-red-400 text-sm m-2 p-2">
@@ -100,26 +89,14 @@ const ResetPassword = () => {
                   </div>
                 </div>
                 <div className="mb-4">
-                  <input
+                  <Input
+                    id="passwordConfirmation"
                     type="password"
-                    value={password_confirmation}
+                    value={passwordConfirmation}
                     onChange={(e) => setPasswordConfirmation(e.target.value)}
-                    placeholder="再次確認密碼"
-                    className="
-                bordder-[#E9EDF4]
-                w-full
-                rounded-md
-                border
-                bg-[#FCFDFE]
-                py-3
-                px-5
-                text-base text-body-color
-                placeholder-[#ACB6BE]
-                outline-none
-                focus:border-primary
-                focus-visible:shadow-none
-              "
+                    label="再次確認密碼"
                   />
+
                   <div className="flex">
                     {errors.password && (
                       <span className="text-red-400 text-sm m-2 p-2">

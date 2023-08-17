@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const navs = [
   {
-    name: "總攬",
+    name: "首頁",
     url: "/",
   },
   {

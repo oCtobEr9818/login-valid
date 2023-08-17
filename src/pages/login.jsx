@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import useAuthContext from "../context/AuthContext";
+import Input from "../components/Input";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -41,64 +42,25 @@ const Login = () => {
                 <div className="mb-10 text-center md:mb-16">帳號登入</div>
 
                 <form onSubmit={handleLogin}>
-                  <div className="mb-4">
-                    <input
-                      type="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      placeholder="電子信箱"
-                      className="
-                        bordder-[#E9EDF4]
-                        w-full
-                        rounded-md
-                        border
-                        bg-[#FCFDFE]
-                        py-3
-                        px-5
-                        text-base text-body-color
-                        placeholder-[#ACB6BE]
-                        outline-none
-                        focus:border-primary
-                        focus-visible:shadow-none
-                      "
-                    />
-                    <div className="flex">
-                      {errors.email && (
-                        <span className="text-red-400 text-sm m-2 p-2">
-                          {errors.email[0]}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                  <div className="mb-4">
-                    <input
-                      type="password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      placeholder="密碼"
-                      className="
-                        bordder-[#E9EDF4]
-                        w-full
-                        rounded-md
-                        border
-                        bg-[#FCFDFE]
-                        py-3
-                        px-5
-                        text-base text-body-color
-                        placeholder-[#ACB6BE]
-                        outline-none
-                        focus:border-primary
-                        focus-visible:shadow-none
-                      "
-                    />
-                    <div className="flex">
-                      {errors.password && (
-                        <span className="text-red-400 text-sm m-2 p-2">
-                          {errors.password[0]}
-                        </span>
-                      )}
-                    </div>
-                  </div>
+                  <Input
+                    id="email"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    label="電子信箱"
+                    errors={errors.email}
+                    errorsMessage={errors.email?.[0]}
+                  />
+
+                  <Input
+                    id="password"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    label="密碼"
+                    errors={errors.password}
+                    errorsMessage={errors.password?.[0]}
+                  />
 
                   <div className="pl-2 mb-6 text-left">
                     <input
