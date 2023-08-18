@@ -64,7 +64,7 @@ const ForgotPassword = () => {
                     label="電子信箱"
                   />
 
-                  <div className="flex">
+                  <div className="text-left">
                     {errors.email && (
                       <span className="text-red-400 text-sm m-2 p-2">
                         {errors.email[0]}

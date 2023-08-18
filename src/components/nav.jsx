@@ -59,7 +59,7 @@ const Nav = () => {
                 <li>
                   <Link
                     to="/event-viewer"
-                    className="w-full inline-block px-2 py-3 mx-auto border-t-1 dark:hover:bg-blue-200  cursor-pointer transition-all duration-200"
+                    className="w-full inline-block px-2 py-3 mx-auto border-t-1 bg-white dark:hover:bg-blue-200  cursor-pointer transition-all duration-200"
                   >
                     顯示所有通知
                   </Link>
@@ -91,7 +91,7 @@ const Nav = () => {
                 {isOpen && (
                   <ul
                     id="dropdown"
-                    className="w-28 py-1 z-10 bg-white rounded-lg shadow absolute right-10 top-16 text-base text-gray-700 dark:text-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 dark:hover:rounded-lg"
+                    className="w-28 py-1 z-20 bg-white rounded-lg shadow absolute right-10 top-16 text-base text-gray-700 dark:text-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 dark:hover:rounded-lg"
                     aria-labelledby="dropdownDefaultButton"
                   >
                     <li>

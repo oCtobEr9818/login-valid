@@ -2,7 +2,7 @@ import React from "react";
 
 const PnHistory = () => {
   return (
-    <div className="w-full h-full p-6">
+    <div className="w-full h-full py-6 px-12">
       <div className="h-auto pl-4 py-4 bg-slate-200 rounded-md text-sm select-none">
         <label className="opacity-60">總攬{" > "}PN_history</label>
       </div>

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Button, IconButton } from "@material-tailwind/react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 
@@ -32,7 +31,7 @@ const Pagination = ({ totalItems, itemsPerPage, activePage, onPageChange }) => {
   };
 
   return (
-    <div className="flex items-center gap-5">
+    <div className="flex items-center gap-4">
       <Button
         variant="text"
         className={`flex items-center gap-2 rounded-full ${

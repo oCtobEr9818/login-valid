@@ -37,7 +37,7 @@ export const AuthProvider = ({ children }) => {
 
       localStorage.setItem("userLoggedIn", "true");
     } catch (err) {
-      if (err.response.status === 422) {
+      if (err.response && err.response.status === 422) {
         setErrors(err.response.data.errors);
       }
     }
