@@ -3,47 +3,86 @@ import { Link } from "react-router-dom";
 
 import axiosPnListApi from "../api/axiosPnListApi";
 import Pagination from "../components/Pagination";
+import Search from "../components/Search";
 
 const PnSummary = () => {
+  const [pnSummaryData, setPnSummaryData] = useState([]);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [activePage, setActivePage] = useState(1);
-  const [allPnSummaryData, setAllPnSummaryData] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedOption, setSelectedOption] = useState("所有類別");
+  const [filterPnSummaryData, setFilterPnSummaryData] = useState([]);
 
-  const getPnListDatas = async () => {
-    try {
-      const response = await axiosPnListApi.get("/pn/1/sn");
-
-      setAllPnSummaryData(response.data.data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  const searchOptions = ["所有類別", "設備序號SN"];
 
   useEffect(() => {
     getPnListDatas();
   }, []);
 
-  const renderPnList = () => {
-    const startIndex = (activePage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    return allPnSummaryData.slice(startIndex, endIndex).map((data) => (
-      <tr key={data.id}>
-        <td className="pnList-table-td">{data.sn_name}</td>
-        <td className="pnList-table-td"></td>
-        <td className="pnList-table-td"></td>
-        <td className="pnList-table-td">
-          <Link
-            to={null}
-            className="p-2.5 rounded-md bg-blue-500 hover:bg-blue-600 text-slate-200"
-          >
-            即時狀態
-          </Link>
-        </td>
-      </tr>
-    ));
+  // fetch PN 資料
+  const getPnListDatas = async () => {
+    try {
+      const response = await axiosPnListApi.get("/issummary/1");
+      const datas = response.data.data;
+
+      setPnSummaryData(datas);
+      setFilterPnSummaryData(datas);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
-  const handlePageNumber = (pageNumber) => setActivePage(pageNumber);
+  // 渲染PN列表
+  const renderPnRows = () => {
+    const startIndex = (activePage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+
+    return filterPnSummaryData
+      .filter((data) => data.field_name.includes(searchQuery))
+      .slice(startIndex, endIndex)
+      .map((data) => (
+        <tr key={data.id}>
+          <td className="pnList-table-td">{data.field_name}</td>
+          <td className="pnList-table-td">{}</td>
+          <td className="pnList-table-td">{}</td>
+          <td className="pnList-table-td">{}</td>
+          <td className="pnList-table-td">
+            <Link
+              to={null}
+              className="p-2.5 rounded-md bg-blue-500 hover:bg-blue-600 text-slate-200"
+            >
+              即時狀態
+            </Link>
+          </td>
+        </tr>
+      ));
+  };
+
+  // 搜尋功能過濾資料
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+
+    let filteredData;
+    if (selectedOption === "設備序號SN") {
+      filteredData = pnSummaryData.filter((data) =>
+        data.field_name.includes(query)
+      );
+    } else {
+      filteredData = pnSummaryData.filter((data) =>
+        data.field_name.includes(query)
+      );
+    }
+
+    setFilterPnSummaryData(filteredData);
+  };
+
+  // 定義處理每頁顯示筆數變更
+  const handleItemsPerPageChange = (e) => {
+    // 將瀏覽頁面設定為第一頁
+    setActivePage(1);
+    // 更新每頁顯示筆數
+    setItemsPerPage(Number(e.target.value));
+  };
 
   return (
     <div className="w-full h-full py-6 px-12">
@@ -52,8 +91,16 @@ const PnSummary = () => {
       </div>
 
       <div className=" h-auto w-full mt-4">
-        <div className="title my-4">
-          <h2 className="text-[32px] font-bold">PN總攬</h2>
+        <div className="my-4 flex items-start lg:justify-between lg:flex-row flex-col">
+          <h2 className="text-[32px] text-center font-bold">PN總攬</h2>
+          <Search
+            options={searchOptions}
+            onSearch={handleSearch}
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            selectedOption={selectedOption}
+            setSelectedOption={setSelectedOption}
+          />
         </div>
 
         <div className="listWrap w-full h-full m-auto border-2">
@@ -62,36 +109,24 @@ const PnSummary = () => {
               <thead>
                 <tr>
                   <th className="pnList-table-th">設備序號(SN)</th>
-                  <th className="pnList-table-th"></th>
+                  <th className="pnList-table-th">最後更新時間</th>
                   <th className="pnList-table-th"></th>
                   <th className="pnList-table-th"></th>
                 </tr>
               </thead>
-              <tbody>{renderPnList()}</tbody>
+              <tbody>{renderPnRows()}</tbody>
             </table>
           </div>
         </div>
 
         <div className="pagination py-6 flex justify-end">
           <Pagination
-            totalItems={allPnSummaryData.length}
+            totalItems={pnSummaryData.length}
             itemsPerPage={itemsPerPage}
             activePage={activePage}
-            onPageChange={handlePageNumber}
+            onPageChange={setActivePage}
+            onSelectChange={handleItemsPerPageChange}
           />
-
-          <select
-            name="pagination"
-            id="pagination"
-            className="ml-7 border-2 border-slate-600 rounded-md focus:border-slate-600"
-            value={itemsPerPage}
-            onChange={(e) => setItemsPerPage(Number(e.target.value))}
-          >
-            <option value="10">10 / 頁</option>
-            <option value="25">25 / 頁</option>
-            <option value="50">50 / 頁</option>
-            <option value="100">100 / 頁</option>
-          </select>
         </div>
       </div>
     </div>

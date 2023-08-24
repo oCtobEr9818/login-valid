@@ -14,25 +14,30 @@ const Search = ({
   const initialOption = "所有類別";
   const initialPlaceholder = "搜尋PN、專案簡稱...";
 
+  // 切換下拉選單狀態
   const toggleDropdown = () => setIsOpen(!isOpen);
+  // 關閉下拉選單
   const closeDropdown = () => setIsOpen(false);
 
+  // 處理下拉選單選擇
   const handleDropdownClick = (option) => {
     setSelectedOption(option);
     setSearchQuery("");
     closeDropdown();
   };
 
+  // 使用 useClickAway Hook，在點擊其他地方時關閉下拉選單
   useClickAway(dropdownRef, closeDropdown);
 
   return (
     <>
-      <div className="flex md:w-1/3 h-full relative">
+      <div className="flex lg:w-1/3 w-full h-full relative">
         <label
           htmlFor="search-dropdown"
           className="mb-2 text-sm font-medium sr-only text-white"
         ></label>
 
+        {/* 所有類別按鈕 */}
         <button
           id="dropdown-button"
           ref={dropdownRef}
@@ -44,6 +49,7 @@ const Search = ({
           <i className="fa fa-chevron-down w-2.5 ml-2.5"></i>
         </button>
 
+        {/* 下拉選單內容 */}
         {isOpen && (
           <div
             id="dropdown"
@@ -57,7 +63,7 @@ const Search = ({
                 <li key={index}>
                   <button
                     type="button"
-                    className="inline-flex w-full px-4 py-2 dark:hover:bg-gray-600 dark:hover:text-white"
+                    className="inline-flex w-full px-4 py-2.5 dark:hover:bg-gray-600 dark:hover:text-white"
                     onClick={() => handleDropdownClick(option)}
                   >
                     {option}
@@ -68,6 +74,7 @@ const Search = ({
           </div>
         )}
 
+        {/* 搜尋輸入框 */}
         <div className="relative w-full">
           <input
             type="search"

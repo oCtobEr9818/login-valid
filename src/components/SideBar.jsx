@@ -29,7 +29,7 @@ const SideBar = () => {
     <>
       <div className="sideBar w-64 min-h-screen bg-sideBar border-r shadow-sideBar">
         <img
-          src="./image/logo.png"
+          src="./image/logo-v2.png"
           alt="明曜科技Logo"
           className=" w-11/12 px-2 py-2 m-auto border-b border-gray-300 object-contain"
         />

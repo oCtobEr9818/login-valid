@@ -13,6 +13,13 @@ const PnList = () => {
   const [selectedOption, setSelectedOption] = useState("所有類別");
   const [filterPnListData, setFilterPnListData] = useState([]);
 
+  const searchOptions = ["所有類別", "PN", "專案簡稱"];
+
+  useEffect(() => {
+    getPnListDatas();
+  }, []);
+
+  // fetch PN 資料
   const getPnListDatas = async () => {
     try {
       const response = await axiosPnListApi.get("/pn");
@@ -21,16 +28,12 @@ const PnList = () => {
       setPnListData(datas);
       setFilterPnListData(datas);
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   };
 
-  useEffect(() => {
-    getPnListDatas();
-  }, []);
-
   // 渲染PN列表
-  const renderPnList = () => {
+  const renderPnRows = () => {
     const startIndex = (activePage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
 
@@ -47,10 +50,10 @@ const PnList = () => {
           <td className="pnList-table-td">{data.nickname}</td>
           <td className="pnList-table-td">{data.location}</td>
           <td className="pnList-table-td">{data.updated_at}</td>
-          <td className="pnList-table-td">
+          <td className="pnList-table-td lg:pl-6">
             <Link
               to="/pn-summary"
-              className="p-2.5 rounded-md bg-blue-500 hover:bg-blue-600 text-slate-200"
+              className="lg:p-2.5 p-1 rounded-md bg-blue-500 hover:bg-blue-600 text-slate-200 text-sm lg:text-base"
             >
               詳細資訊
             </Link>
@@ -64,7 +67,6 @@ const PnList = () => {
     setSearchQuery(query);
 
     let filteredData;
-
     if (selectedOption === "PN") {
       filteredData = pnListData.filter((data) => data.pn_name.includes(query));
     } else if (selectedOption === "專案簡稱") {
@@ -78,7 +80,13 @@ const PnList = () => {
     setFilterPnListData(filteredData);
   };
 
-  const handlePageNumber = (pageNumber) => setActivePage(pageNumber);
+  // 定義處理每頁顯示筆數變更
+  const handleItemsPerPageChange = (e) => {
+    // 將瀏覽頁面設定為第一頁
+    setActivePage(1);
+    // 更新每頁顯示筆數
+    setItemsPerPage(Number(e.target.value));
+  };
 
   return (
     <div className="w-full h-full py-6 px-12">
@@ -87,10 +95,10 @@ const PnList = () => {
       </div>
 
       <div className="h-auto w-full mt-4">
-        <div className="title my-4 flex md:justify-between md:flex-row flex-col">
+        <div className="my-4 flex items-start lg:justify-between lg:flex-row flex-col">
           <h2 className="text-[32px] font-bold text-center">PN列表</h2>
           <Search
-            options={["所有類別", "PN", "專案簡稱"]}
+            options={searchOptions}
             onSearch={handleSearch}
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
@@ -99,44 +107,32 @@ const PnList = () => {
           />
         </div>
 
-        <div className="listWrap w-full h-full m-auto border-2">
-          <div className="list4">
-            <table className="w-full h-full">
-              <thead>
-                <tr>
-                  <th className="pnList-table-th">場域(PN)</th>
-                  <th className="pnList-table-th">專案簡稱</th>
-                  <th className="pnList-table-th">地點</th>
-                  <th className="pnList-table-th">最後上傳時間</th>
-                  <th className="pnList-table-th">PN總攬</th>
-                </tr>
-              </thead>
-              {/* 列表內容 */}
-              <tbody>{renderPnList()}</tbody>
-            </table>
-          </div>
+        {/* 表格 */}
+        <div className="listWrap lg:w-full h-full m-auto border-2">
+          <table className="lg:w-full h-full">
+            <thead>
+              <tr>
+                <th className="pnList-table-th">場域(PN)</th>
+                <th className="pnList-table-th">專案簡稱</th>
+                <th className="pnList-table-th">地點</th>
+                <th className="pnList-table-th">最後上傳時間</th>
+                <th className="pnList-table-th">PN總攬</th>
+              </tr>
+            </thead>
+            {/* 表格內容 */}
+            <tbody>{renderPnRows()}</tbody>
+          </table>
         </div>
 
+        {/* 分頁 */}
         <div className="pagination py-6 flex justify-end">
           <Pagination
             totalItems={pnListData.length}
             itemsPerPage={itemsPerPage}
             activePage={activePage}
-            onPageChange={handlePageNumber}
+            onPageChange={setActivePage}
+            onSelectChange={handleItemsPerPageChange}
           />
-
-          <select
-            name="pagination"
-            id="pagination"
-            className="ml-7 border-2 border-slate-600 rounded-md focus:border-slate-600"
-            value={itemsPerPage}
-            onChange={(e) => setItemsPerPage(Number(e.target.value))}
-          >
-            <option value="10">10 / 頁</option>
-            <option value="25">25 / 頁</option>
-            <option value="50">50 / 頁</option>
-            <option value="100">100 / 頁</option>
-          </select>
         </div>
       </div>
     </div>

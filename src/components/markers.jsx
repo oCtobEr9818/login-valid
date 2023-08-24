@@ -1,6 +1,7 @@
 export const markers = [
   {
     key: "0",
+    route: "/pn-summary",
     markerColor: "#f00",
     name: "彰化",
     projectName: "M4 panel",
@@ -38,6 +39,7 @@ export const markers = [
   },
   {
     key: "1",
+    route: "/pn-summary",
     markerColor: "#f00",
     name: "花蓮",
     projectName: "花蓮",

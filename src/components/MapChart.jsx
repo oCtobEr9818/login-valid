@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import {
   ComposableMap,
   Geographies,
@@ -67,40 +68,45 @@ const MapChart = () => {
           }
         </Geographies>
 
-        {markers.map(({ name, coordinates, markerOffset, markerColor }) => (
-          <Marker
-            key={name}
-            coordinates={coordinates}
-            onMouseEnter={() => handleMarkerHover(name)}
-            onMouseLeave={handleMarkerLeave}
-          >
-            <g
-              fill="none"
-              stroke={markerColor}
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              transform="translate(-12, -24)"
-              cursor="pointer"
+        {markers.map(
+          ({ route, name, coordinates, markerOffset, markerColor }) => (
+            <Marker
+              key={name}
+              coordinates={coordinates}
+              onMouseEnter={() => handleMarkerHover(name)}
+              onMouseLeave={handleMarkerLeave}
             >
-              <circle cx="12" cy="10" r="3" />
-              <path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 6.9 8 11.7z" />
-            </g>
-            <text
-              textAnchor="middle"
-              x={markerOffset.x}
-              y={markerOffset.y}
-              style={{
-                fontFamily: "Arial",
-                fill: "#5D5A6D",
-                cursor: "pointer",
-              }}
-            >
-              {name}
-            </text>
-          </Marker>
-        ))}
+              <Link to={route}>
+                <g
+                  fill="none"
+                  stroke={markerColor}
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  transform="translate(-12, -24)"
+                  cursor="pointer"
+                >
+                  <circle cx="12" cy="10" r="3" />
+                  <path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 6.9 8 11.7z" />
+                </g>
+                <text
+                  textAnchor="middle"
+                  x={markerOffset.x}
+                  y={markerOffset.y}
+                  style={{
+                    fontFamily: "Arial",
+                    fill: "#5D5A6D",
+                    cursor: "pointer",
+                  }}
+                >
+                  {name}
+                </text>
+              </Link>
+            </Marker>
+          )
+        )}
 
+        {/* 懸停在標記點或地名的卡片資訊 */}
         {selectedMarker &&
           markers.map(
             ({ key, name, projectName, coordinates, cardCoordinates }) =>
