@@ -21,15 +21,15 @@ const Nav = () => {
 
   return (
     <>
-      <nav className="navBar border-2 bg-gray-50 px-2 py-4 sm:px-4 shadow-sm  relative">
+      <nav className="navBar border-2 bg-gray-50 py-4 shadow-sm  relative">
         <div className="container mx-auto my-4 flex flex-wrap items-center justify-end ">
-          <div className="hidden w-full md:block md:w-auto">
+          <div className="w-full block">
             {/* 通知中心鈴鐺圖示 */}
             <button
               id="noticeDefaultButton"
               ref={noticeRef}
               onClick={toggleNoticeRow}
-              className="w-10 h-10 leading-10 absolute top-3 right-44 cursor-pointer text-center text-xl"
+              className="w-10 h-10 leading-10 absolute top-3 right-24 md:right-44 cursor-pointer text-center text-xl"
               type="button"
             >
               <i
@@ -73,7 +73,7 @@ const Nav = () => {
                   ref={dropdownRef}
                   id="dropdownDefaultButton"
                   onClick={toggleDropdown}
-                  className=" text-gray-800 font-semibold text-sm px-5 py-2.5 text-center inline-flex items-center border-l border-gray-500 absolute top-3 right-10"
+                  className=" text-gray-800 font-semibold text-sm md:px-5 px-3 py-2.5 text-center inline-flex items-center border-l border-gray-500 absolute top-3 right-0 md:right-10"
                   type="button"
                 >
                   {user.name}

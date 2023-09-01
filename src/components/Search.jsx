@@ -8,11 +8,11 @@ const Search = ({
   setSearchQuery,
   selectedOption,
   setSelectedOption,
+  initialPlaceholder,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
   const initialOption = "所有類別";
-  const initialPlaceholder = "搜尋PN、專案簡稱...";
 
   // 切換下拉選單狀態
   const toggleDropdown = () => setIsOpen(!isOpen);

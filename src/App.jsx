@@ -20,24 +20,21 @@ export default function App() {
         <AuthProvider>
           <Routes>
             <Route element={<AuthLayout />}>
-              <Route path="/" element={<Home />}></Route>
-              <Route path="/pn-list" element={<PnList />}></Route>
-              <Route path="/pn-summary" element={<PnSummary />}></Route>
-              <Route path="/pn-history" element={<PnHistory />}></Route>
-              <Route path="/event-viewer" element={<EventViewer />}></Route>
+              <Route path="/" element={<Home />} />
+              <Route path="/pn-list" element={<PnList />} />
+              <Route path="/pn-summary" element={<PnSummary />} />
+              <Route path="/pn-history" element={<PnHistory />} />
+              <Route path="/event-viewer" element={<EventViewer />} />
             </Route>
 
             <Route element={<GuestLayout />}>
-              <Route path="/login" element={<Login />}></Route>
-              <Route path="/register" element={<Register />}></Route>
-              <Route
-                path="/forgot-password"
-                element={<ForgotPassword />}
-              ></Route>
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
               <Route
                 path="/password-reset/:token"
                 element={<ResetPassword />}
-              ></Route>
+              />
             </Route>
           </Routes>
         </AuthProvider>

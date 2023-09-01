@@ -32,6 +32,7 @@ export const AuthProvider = ({ children }) => {
     try {
       await axios.post("/login", data);
       await getUser();
+
       navigate("/");
       alert("登入成功！");
 

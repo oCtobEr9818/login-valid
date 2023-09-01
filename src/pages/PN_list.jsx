@@ -104,6 +104,7 @@ const PnList = () => {
             setSearchQuery={setSearchQuery}
             selectedOption={selectedOption}
             setSelectedOption={setSelectedOption}
+            initialPlaceholder="搜尋PN、專案簡稱"
           />
         </div>
 

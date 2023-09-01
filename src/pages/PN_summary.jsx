@@ -6,14 +6,15 @@ import Pagination from "../components/Pagination";
 import Search from "../components/Search";
 
 const PnSummary = () => {
-  const [pnSummaryData, setPnSummaryData] = useState([]);
+  const [snDatas, setSnDatas] = useState([]);
+  // const [deviceName, setDeviceName] = useState([]);
+  const [filterSnDatas, setFilterSnDatas] = useState([]);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [activePage, setActivePage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedOption, setSelectedOption] = useState("所有類別");
-  const [filterPnSummaryData, setFilterPnSummaryData] = useState([]);
 
-  const searchOptions = ["所有類別", "設備序號SN"];
+  const searchOptions = ["所有類別", "SN"];
 
   useEffect(() => {
     getPnListDatas();
@@ -22,11 +23,14 @@ const PnSummary = () => {
   // fetch PN 資料
   const getPnListDatas = async () => {
     try {
-      const response = await axiosPnListApi.get("/issummary/1");
-      const datas = response.data.data;
+      const snResponse = await axiosPnListApi.get("/pn/1/sn");
+      // const deviceResponse = await axiosPnListApi.get("/pn/1/sn/1/device");
+      const snJSON = snResponse.data.data;
+      // const deviceNameJSON = deviceResponse.data.data;
 
-      setPnSummaryData(datas);
-      setFilterPnSummaryData(datas);
+      setSnDatas(snJSON);
+      setFilterSnDatas(snJSON);
+      // setDeviceName(deviceNameJSON);
     } catch (err) {
       console.log(err);
     }
@@ -37,13 +41,12 @@ const PnSummary = () => {
     const startIndex = (activePage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
 
-    return filterPnSummaryData
-      .filter((data) => data.field_name.includes(searchQuery))
+    return filterSnDatas
+      .filter((data) => data.sn_name.includes(searchQuery))
       .slice(startIndex, endIndex)
       .map((data) => (
         <tr key={data.id}>
-          <td className="pnList-table-td">{data.field_name}</td>
-          <td className="pnList-table-td">{}</td>
+          <td className="pnList-table-td">{data.sn_name}</td>
           <td className="pnList-table-td">{}</td>
           <td className="pnList-table-td">{}</td>
           <td className="pnList-table-td">
@@ -63,17 +66,13 @@ const PnSummary = () => {
     setSearchQuery(query);
 
     let filteredData;
-    if (selectedOption === "設備序號SN") {
-      filteredData = pnSummaryData.filter((data) =>
-        data.field_name.includes(query)
-      );
+    if (selectedOption === "SN") {
+      filteredData = snDatas.filter((data) => data.sn_name.includes(query));
     } else {
-      filteredData = pnSummaryData.filter((data) =>
-        data.field_name.includes(query)
-      );
+      filteredData = snDatas.filter((data) => data.sn_name.includes(query));
     }
 
-    setFilterPnSummaryData(filteredData);
+    setFilterSnDatas(filteredData);
   };
 
   // 定義處理每頁顯示筆數變更
@@ -100,6 +99,7 @@ const PnSummary = () => {
             setSearchQuery={setSearchQuery}
             selectedOption={selectedOption}
             setSelectedOption={setSelectedOption}
+            initialPlaceholder="SN、裝置名稱、裝置資料"
           />
         </div>
 
@@ -108,10 +108,9 @@ const PnSummary = () => {
             <table className="w-full h-full">
               <thead>
                 <tr>
-                  <th className="pnList-table-th">設備序號(SN)</th>
-                  <th className="pnList-table-th">最後更新時間</th>
-                  <th className="pnList-table-th"></th>
-                  <th className="pnList-table-th"></th>
+                  <th className="pnList-table-th">SN</th>
+                  <th className="pnList-table-th">裝置名稱</th>
+                  <th className="pnList-table-th">裝置資料</th>
                 </tr>
               </thead>
               <tbody>{renderPnRows()}</tbody>
@@ -121,7 +120,7 @@ const PnSummary = () => {
 
         <div className="pagination py-6 flex justify-end">
           <Pagination
-            totalItems={pnSummaryData.length}
+            totalItems={snDatas.length}
             itemsPerPage={itemsPerPage}
             activePage={activePage}
             onPageChange={setActivePage}

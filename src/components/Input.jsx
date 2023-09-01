@@ -33,7 +33,7 @@ const Input = ({ id, type, value, onChange, label, errors, errorsMessage }) => {
       </label>
 
       <div className="text-left py-1">
-        {value === "" && errors && (
+        {errors && (
           <span className="text-red-400 text-sm m-2 p-2">{errorsMessage}</span>
         )}
       </div>
