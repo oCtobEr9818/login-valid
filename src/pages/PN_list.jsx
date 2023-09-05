@@ -13,7 +13,7 @@ const PnList = () => {
   const [selectedOption, setSelectedOption] = useState("所有類別");
   const [filterPnListData, setFilterPnListData] = useState([]);
 
-  const searchOptions = ["所有類別", "PN", "專案簡稱"];
+  const searchOptions = ["所有類別", "PN", "專案簡稱", "地點"];
 
   useEffect(() => {
     getPnListDatas();
@@ -41,21 +41,28 @@ const PnList = () => {
       .filter(
         (data) =>
           data.pn_name.includes(searchQuery) ||
-          data.nickname.includes(searchQuery)
+          data.nickname.includes(searchQuery) ||
+          data.location.includes(searchQuery)
       )
       .slice(startIndex, endIndex)
       .map((data) => (
-        <tr key={data.id}>
+        <tr key={data.id} className="h-16">
           <td className="pnList-table-td">{data.pn_name}</td>
           <td className="pnList-table-td">{data.nickname}</td>
           <td className="pnList-table-td">{data.location}</td>
           <td className="pnList-table-td">{data.updated_at}</td>
-          <td className="pnList-table-td lg:pl-6">
+          <td className="pnList-table-td flex items-center justify-start">
             <Link
-              to="/pn-summary"
+              to={`/pn-summary-${data.pn_name}`}
               className="lg:p-2.5 p-1 rounded-md bg-blue-500 hover:bg-blue-600 text-slate-200 text-sm lg:text-base"
             >
               詳細資訊
+            </Link>
+            <Link
+              to="/pn-history"
+              className="lg:p-2.5 p-1 ml-3 -mr-3 rounded-md bg-blue-500 hover:bg-blue-600 text-slate-200 text-sm lg:text-base"
+            >
+              歷史資料
             </Link>
           </td>
         </tr>
@@ -67,14 +74,30 @@ const PnList = () => {
     setSearchQuery(query);
 
     let filteredData;
-    if (selectedOption === "PN") {
-      filteredData = pnListData.filter((data) => data.pn_name.includes(query));
-    } else if (selectedOption === "專案簡稱") {
-      filteredData = pnListData.filter((data) => data.nickname.includes(query));
-    } else {
-      filteredData = pnListData.filter(
-        (data) => data.pn_name.includes(query) || data.nickname.includes(query)
-      );
+    switch (selectedOption) {
+      case "PN":
+        filteredData = pnListData.filter((data) =>
+          data.pn_name.includes(query)
+        );
+        break;
+      case "專案簡稱":
+        filteredData = pnListData.filter((data) =>
+          data.nickname.includes(query)
+        );
+        break;
+      case "地點":
+        filteredData = pnListData.filter((data) =>
+          data.location.includes(query)
+        );
+        break;
+      default:
+        filteredData = pnListData.filter(
+          (data) =>
+            data.pn_name.includes(query) ||
+            data.nickname.includes(query) ||
+            data.location.includes(query)
+        );
+        break;
     }
 
     setFilterPnListData(filteredData);
@@ -91,10 +114,10 @@ const PnList = () => {
   return (
     <div className="w-full h-full py-6 px-12">
       <div className="h-auto pl-4 py-4 bg-slate-200 rounded-md text-sm select-none">
-        <label className="opacity-60">總攬{" > "}PN_list</label>
+        <label className=" opacity-80">首頁{" > "}PN 列表</label>
       </div>
 
-      <div className="h-auto w-full mt-4">
+      <div className="h-auto w-full mt-4 text-mainText">
         <div className="my-4 flex items-start lg:justify-between lg:flex-row flex-col">
           <h2 className="text-[32px] font-bold text-center">PN列表</h2>
           <Search
@@ -104,13 +127,13 @@ const PnList = () => {
             setSearchQuery={setSearchQuery}
             selectedOption={selectedOption}
             setSelectedOption={setSelectedOption}
-            initialPlaceholder="搜尋PN、專案簡稱"
+            initialPlaceholder="搜尋PN、專案簡稱、地點"
           />
         </div>
 
         {/* 表格 */}
-        <div className="listWrap lg:w-full h-full m-auto border-2">
-          <table className="lg:w-full h-full">
+        <div className="listWrap lg:w-full h-full m-auto">
+          <table className="lg:w-full h-full border-b-2">
             <thead>
               <tr>
                 <th className="pnList-table-th">場域(PN)</th>

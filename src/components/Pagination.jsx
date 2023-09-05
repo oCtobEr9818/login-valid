@@ -82,7 +82,7 @@ const Pagination = ({
       {/* 上一頁按鈕 */}
       <Button
         variant="text"
-        className={`flex items-center gap-2 rounded-full ${
+        className={`flex items-center gap-2 rounded-full text-mainText ${
           activePage === 1 ? "opacity-60" : ""
         }
         }`}
@@ -100,7 +100,7 @@ const Pagination = ({
       {/* 下一頁按鈕 */}
       <Button
         variant="text"
-        className={`flex items-center gap-2 rounded-full ${
+        className={`flex items-center gap-2 rounded-full text-mainText ${
           activePage === totalPage ? "opacity-60" : ""
         }
         }`}
@@ -112,7 +112,7 @@ const Pagination = ({
       </Button>
 
       <select
-        className="ml-7 border-2 border-slate-600 rounded-md focus:border-slate-600"
+        className="ml-7 border-1 border-slate-100 rounded-md focus:border-slate-400 text-mainText bg-body"
         value={itemsPerPage}
         onChange={onSelectChange}
       >

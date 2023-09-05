@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@canvasjs/react-charts": "^1.0.0",
     "@geist-ui/core": "^2.3.8",
     "@heroicons/react": "^2.0.18",
     "@material-tailwind/react": "^2.1.0",

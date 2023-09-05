@@ -4,13 +4,11 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        options: "#7D76E9",
-        options_hover: "#faf3f3",
+        mainText: "#fcfcfc",
       },
       backgroundColor: {
         sideBar: "#E5F8C6",
-        options: "#faf3f3",
-        options_hover: "#676492",
+        body: "#3a3e44",
       },
       borderColor: {
         options: "#bab",
@@ -22,7 +20,9 @@ module.exports = {
         eticaLogo: "4.2rem",
       },
       boxShadow: {
-        sideBar: "5px 0 5px rgba(0, 0, 0, 0.7)",
+        sideBar: "3px 0px 5px rgba(0, 0, 0, 0.7)",
+        nav: "0px 3px 5px rgba(0, 0, 0, 0.7)",
+        footer: "5px 0px 5px rgba(0, 0, 0, 0.7)",
       },
     },
   },

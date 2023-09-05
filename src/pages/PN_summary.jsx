@@ -7,14 +7,13 @@ import Search from "../components/Search";
 
 const PnSummary = () => {
   const [snDatas, setSnDatas] = useState([]);
-  // const [deviceName, setDeviceName] = useState([]);
   const [filterSnDatas, setFilterSnDatas] = useState([]);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [activePage, setActivePage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedOption, setSelectedOption] = useState("所有類別");
 
-  const searchOptions = ["所有類別", "SN"];
+  const searchOptions = ["所有類別", "SN", "裝置名稱"];
 
   useEffect(() => {
     getPnListDatas();
@@ -24,13 +23,49 @@ const PnSummary = () => {
   const getPnListDatas = async () => {
     try {
       const snResponse = await axiosPnListApi.get("/pn/1/sn");
-      // const deviceResponse = await axiosPnListApi.get("/pn/1/sn/1/device");
+      const deviceNameResponse = await axiosPnListApi.get("/pn/1/sn/1/device");
+      const deviceDataResponse = await axiosPnListApi.get(
+        "/pn/1/sn/1/device/1"
+      );
+      const deviceDataResponse2 = await axiosPnListApi.get(
+        "/pn/1/sn/1/device/2"
+      );
       const snJSON = snResponse.data.data;
-      // const deviceNameJSON = deviceResponse.data.data;
+      const deviceNameJSON = deviceNameResponse.data.data;
+      const deviceData = deviceDataResponse.data.data;
+      const deviceDataJSON = JSON.parse(deviceData[0].data);
+      const deviceData2 = deviceDataResponse2.data.data;
+      const deviceDataJSON2 = JSON.parse(deviceData2[0].data);
+      console.log("https://essbackend.etica-inc.com/api/v2/pn/1/sn/1/device/1");
+      console.log("MBMU 原始資料：", deviceData);
+      console.log("MBMU JSON 資料：", deviceDataJSON);
+      console.log("");
+      console.log("https://essbackend.etica-inc.com/api/v2/pn/1/sn/1/device/2");
+      console.log("SBMU 原始資料：", deviceData2);
+      console.log("SBMU JSON 資料：", deviceDataJSON2);
 
-      setSnDatas(snJSON);
-      setFilterSnDatas(snJSON);
-      // setDeviceName(deviceNameJSON);
+      // 將SN、裝置名稱的資料合併
+      const combineDatas = [];
+      // 取長度較長的array
+      const longerArray =
+        snJSON.length >= deviceNameJSON.length ? snJSON : deviceNameJSON;
+
+      longerArray.forEach((_, index) => {
+        const snItem = snJSON[index] || {};
+        const deviceItem = deviceNameJSON[index] || {};
+
+        combineDatas.push({
+          id: index + 1,
+          pn_id: snItem.pn_id || deviceItem.pn_id,
+          sn_id: snItem.sn_id || deviceItem.sn_id,
+          device_name: deviceItem.device_name || "",
+          sn_name: snItem.sn_name || "",
+          created_at: deviceItem.created_at,
+          updated_at: deviceItem.updated_at,
+        });
+      });
+      setSnDatas(combineDatas);
+      setFilterSnDatas(combineDatas);
     } catch (err) {
       console.log(err);
     }
@@ -42,12 +77,16 @@ const PnSummary = () => {
     const endIndex = startIndex + itemsPerPage;
 
     return filterSnDatas
-      .filter((data) => data.sn_name.includes(searchQuery))
+      .filter(
+        (data) =>
+          data.sn_name?.includes(searchQuery) ||
+          data.device_name?.includes(searchQuery)
+      )
       .slice(startIndex, endIndex)
       .map((data) => (
         <tr key={data.id}>
           <td className="pnList-table-td">{data.sn_name}</td>
-          <td className="pnList-table-td">{}</td>
+          <td className="pnList-table-td">{data.device_name}</td>
           <td className="pnList-table-td">{}</td>
           <td className="pnList-table-td">
             <Link
@@ -67,9 +106,16 @@ const PnSummary = () => {
 
     let filteredData;
     if (selectedOption === "SN") {
-      filteredData = snDatas.filter((data) => data.sn_name.includes(query));
+      filteredData = snDatas.filter((data) => data.sn_name?.includes(query));
+    } else if (selectedOption === "裝置名稱") {
+      filteredData = snDatas.filter((data) =>
+        data.device_name?.includes(query)
+      );
     } else {
-      filteredData = snDatas.filter((data) => data.sn_name.includes(query));
+      filteredData = snDatas.filter(
+        (data) =>
+          data.sn_name?.includes(query) || data.device_name?.includes(query)
+      );
     }
 
     setFilterSnDatas(filteredData);
@@ -120,7 +166,7 @@ const PnSummary = () => {
 
         <div className="pagination py-6 flex justify-end">
           <Pagination
-            totalItems={snDatas.length}
+            totalItems={filterSnDatas.length}
             itemsPerPage={itemsPerPage}
             activePage={activePage}
             onPageChange={setActivePage}

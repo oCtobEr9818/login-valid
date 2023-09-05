@@ -11,7 +11,7 @@ const AuthLayout = () => {
     <div className="min-h-screen w-full m-0 p-0 flex">
       <SideBar />
 
-      <div className="flex flex-col w-full bg-white">
+      <div className="flex flex-col w-full bg-body">
         <Nav />
         <Outlet />
         <Footer />

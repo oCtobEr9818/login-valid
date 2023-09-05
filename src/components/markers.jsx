@@ -1,11 +1,16 @@
 export const markers = [
   {
     id: "1",
-    route: "/pn-summary",
-    markerColor: "#f00",
+    route: "/pn-summary-FEX0102",
     name: "華城大東民心455",
     projectName: "FEX0102",
-    markerOffset: { x: 70, y: 15 },
+    markerOffset: { x: 75, y: 18 },
+    markerColor: "#f00",
+    textOutline: {
+      x: "475",
+      y: "298",
+      width: "130",
+    },
     coordinates: [121.6, 23.98],
     cardCoordinates: {
       outterBackground: {
@@ -24,6 +29,7 @@ export const markers = [
         x: "300",
         y: "258",
       },
+
       line: {
         xStart: "260",
         yStart: "265",
@@ -39,20 +45,25 @@ export const markers = [
   },
   {
     id: "2",
-    route: "/pn-summary",
-    markerColor: "#f00",
+    route: "/pn-summary-FEX0101",
     name: "華城大東民心244",
     projectName: "FEX0101",
-    markerOffset: { x: 75, y: -10 },
+    markerOffset: { x: 85, y: -15 },
+    markerColor: "#f00",
+    textOutline: {
+      x: "485",
+      y: "261",
+      width: "130",
+    },
     coordinates: [121.6, 24.02],
     cardCoordinates: {
       outterBackground: {
         x: "250",
-        y: "210",
+        y: "205",
       },
       innerBackground: {
         x: "251.5",
-        y: "211.5",
+        y: "206.5",
       },
       clipPath: {
         attribute:
@@ -60,28 +71,34 @@ export const markers = [
       },
       text: {
         x: "300",
-        y: "228",
+        y: "223",
       },
+
       line: {
         xStart: "260",
-        yStart: "235",
+        yStart: "230",
         xEnd: "390",
-        yEnd: "235",
+        yEnd: "230",
       },
       image: {
         x: "260",
-        y: "240",
+        y: "235",
         urL: "/image/花蓮華城大東244.jpg",
       },
     },
   },
   {
     id: "3",
-    route: "/pn-summary",
-    markerColor: "#f00",
+    route: "/pn-summary-FEX0100",
     name: "華城觀音三廠",
     projectName: "FEX0100",
-    markerOffset: { x: -60, y: -10 },
+    markerOffset: { x: -65, y: -10 },
+    markerColor: "#f00",
+    textOutline: {
+      x: "295",
+      y: "153",
+      width: "105",
+    },
     coordinates: [121.1, 25],
     cardCoordinates: {
       outterBackground: {
@@ -100,6 +117,7 @@ export const markers = [
         x: "20",
         y: "113",
       },
+
       line: {
         xStart: "-20",
         yStart: "120",
@@ -115,20 +133,25 @@ export const markers = [
   },
   {
     id: "4",
-    route: "/pn-summary",
-    markerColor: "#f00",
+    route: "/pn-summary-TCN01A1",
     name: "M4彰濱",
     projectName: "TCN01A1",
     markerOffset: { x: -40, y: -14 },
+    markerColor: "#f00",
+    textOutline: {
+      x: "250",
+      y: "293",
+      width: "60",
+    },
     coordinates: [120.22, 23.75],
     cardCoordinates: {
       outterBackground: {
         x: "65",
-        y: "140",
+        y: "135",
       },
       innerBackground: {
         x: "66.5",
-        y: "141.5",
+        y: "136.5",
       },
       clipPath: {
         attribute:
@@ -136,17 +159,18 @@ export const markers = [
       },
       text: {
         x: "115",
-        y: "158",
+        y: "153",
       },
+
       line: {
         xStart: "75",
-        yStart: "165",
+        yStart: "160",
         xEnd: "205",
-        yEnd: "165",
+        yEnd: "160",
       },
       image: {
         x: "75",
-        y: "175",
+        y: "170",
         urL: "/image/logo.png",
       },
     },

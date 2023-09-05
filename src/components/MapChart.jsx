@@ -62,6 +62,7 @@ const MapChart = () => {
                         outline: "none",
                         cursor: "pointer",
                         opacity: "0.5",
+                        stroke: "#000",
                       },
                     }}
                   />
@@ -75,10 +76,27 @@ const MapChart = () => {
               <Marker
                 key={name}
                 coordinates={coordinates}
-                onMouseEnter={() => handleMarkerHover(name)}
-                onMouseLeave={handleMarkerLeave}
+                onMouseEnter={() => {
+                  handleMarkerHover(name);
+
+                  markers.forEach((marker) => {
+                    if (marker.name === name) {
+                      marker.markerColor = "#0AD";
+                    }
+                  });
+                }}
+                onMouseLeave={() => {
+                  handleMarkerLeave();
+
+                  markers.forEach((marker) => {
+                    if (marker.name === name) {
+                      marker.markerColor = "#f00";
+                    }
+                  });
+                }}
               >
                 <Link to={route}>
+                  {/* 紅色標記點 */}
                   <g
                     fill="none"
                     stroke={markerColor}
@@ -91,13 +109,14 @@ const MapChart = () => {
                     <circle cx="12" cy="10" r="3" />
                     <path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 6.9 8 11.7z" />
                   </g>
+                  {/* 案場名稱 */}
                   <text
                     textAnchor="middle"
                     x={markerOffset.x}
                     y={markerOffset.y}
                     style={{
                       fontFamily: "Arial",
-                      fill: "#5D5A6D",
+                      fill: "#fcfcfc",
                       cursor: "pointer",
                     }}
                   >
@@ -111,7 +130,14 @@ const MapChart = () => {
           {/* 懸停在標記點或地名的卡片資訊 */}
           {selectedMarker &&
             markers.map(
-              ({ id, name, projectName, coordinates, cardCoordinates }) =>
+              ({
+                id,
+                name,
+                projectName,
+                coordinates,
+                cardCoordinates,
+                textOutline,
+              }) =>
                 name === selectedMarker && (
                   <>
                     <g
@@ -165,7 +191,18 @@ const MapChart = () => {
                         height="90"
                         xlinkHref={cardCoordinates.image.urL}
                       />
+                      {/* 地標外框 */}
                     </g>
+                    <rect
+                      x={textOutline.x}
+                      y={textOutline.y}
+                      width={textOutline.width}
+                      height="25"
+                      stroke="#fcfcfc"
+                      fill="none"
+                      strokeWidth="1"
+                      rx="5"
+                    />
                   </>
                 )
             )}

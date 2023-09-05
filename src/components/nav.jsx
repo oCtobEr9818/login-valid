@@ -21,7 +21,7 @@ const Nav = () => {
 
   return (
     <>
-      <nav className="navBar border-2 bg-gray-50 py-4 shadow-sm  relative">
+      <nav className="navBar bg-[#212327] border-0 py-4 shadow-nav relative">
         <div className="container mx-auto my-4 flex flex-wrap items-center justify-end ">
           <div className="w-full block">
             {/* 通知中心鈴鐺圖示 */}
@@ -33,7 +33,7 @@ const Nav = () => {
               type="button"
             >
               <i
-                className={`fa fa-bell text-black transition-all duration-100 opacity-20 hover:opacity-40 ${
+                className={`fa fa-bell text-slate-100 transition-all duration-100 opacity-20 hover:opacity-40 ${
                   isNoticeOpen && "opacity-40"
                 }`}
                 aria-hidden="true"
@@ -43,7 +43,7 @@ const Nav = () => {
             {isNoticeOpen && (
               <ul
                 id="notice"
-                className={`w-60 z-20 border-1 rounded-t-lg shadow-lg absolute right-40 top-16 text-sm text-center`}
+                className={`w-60 z-20 border-1 border-gray-700 rounded-t-lg shadow-lg absolute right-40 top-16 text-sm text-center`}
                 aria-labelledby="noticeDefaultButton"
               >
                 <li className="bg-blue-600 text-slate-100 rounded-t-lg">
@@ -73,7 +73,7 @@ const Nav = () => {
                   ref={dropdownRef}
                   id="dropdownDefaultButton"
                   onClick={toggleDropdown}
-                  className=" text-gray-800 font-semibold text-sm md:px-5 px-3 py-2.5 text-center inline-flex items-center border-l border-gray-500 absolute top-3 right-0 md:right-10"
+                  className=" text-gray-200 font-semibold text-sm md:px-5 px-3 py-2.5 text-center inline-flex items-center border-l border-gray-500 absolute top-3 right-0 md:right-10"
                   type="button"
                 >
                   {user.name}
@@ -91,7 +91,7 @@ const Nav = () => {
                 {isOpen && (
                   <ul
                     id="dropdown"
-                    className="w-28 py-1 z-20 bg-white rounded-lg shadow absolute right-10 top-16 text-base text-gray-700 dark:text-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 dark:hover:rounded-lg"
+                    className="w-28 py-1 z-20 rounded-lg shadow absolute right-10 top-16 text-base text-gray-700 dark:text-gray-200 dark:bg-gray-600 dark:hover:bg-gray-500 dark:hover:text-white-100 dark:hover:rounded-lg"
                     aria-labelledby="dropdownDefaultButton"
                   >
                     <li>
