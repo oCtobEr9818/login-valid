@@ -42,7 +42,7 @@ const ResetPassword = () => {
   };
 
   return (
-    <section className="bg-[#F4F7FF] py-20 lg:py-[120px]">
+    <section className="bg-body py-20 lg:py-[120px]">
       <div className="container mx-auto">
         <div className="-mx-4 flex flex-wrap">
           <div className="w-full px-4">

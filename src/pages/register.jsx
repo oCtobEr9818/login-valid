@@ -18,7 +18,7 @@ const Register = () => {
 
   return (
     <>
-      <section className="bg-[#F4F7FF] py-20 lg:py-[120px]">
+      <section className="bg-body py-20 lg:py-[120px]">
         <div className="container mx-auto">
           <div className="-mx-4 flex flex-wrap">
             <div className="w-full px-4">
@@ -102,14 +102,17 @@ const Register = () => {
                     mb-2
                     inline-block
                     text-base text-[#adadad]
-                    hover:text-primary hover:underline
+                    text-primary hover:underline hover:text-red-600
                   "
                 >
                   忘記密碼?
                 </Link>
                 <p className="text-base text-[#adadad]">
                   已經註冊了嗎?
-                  <Link to="/login" className="text-primary hover:underline">
+                  <Link
+                    to="/login"
+                    className="text-primary hover:underline hover:text-red-600"
+                  >
                     立即登入
                   </Link>
                 </p>

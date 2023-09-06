@@ -34,12 +34,14 @@ const Login = () => {
 
   return (
     <>
-      <section className="bg-[#F4F7FF] py-20 lg:py-[120px]">
+      <section className="bg-body py-20 lg:py-[120px]">
         <div className="container mx-auto">
           <div className="-mx-4 flex flex-wrap">
             <div className="w-full px-4">
               <div className="relative mx-auto max-w-[525px] overflow-hidden rounded-lg bg-white py-16 px-10 text-center sm:px-12 md:px-[60px]">
-                <div className="mb-10 text-center md:mb-16">帳號登入</div>
+                <div className="mb-10 text-center font-bold text-[24px] md:mb-16">
+                  ESS系統登入
+                </div>
 
                 <form onSubmit={handleLogin}>
                   <Input

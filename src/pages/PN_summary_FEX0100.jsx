@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 import axiosPnListApi from "../api/axiosPnListApi";
-import CanvasJSReact from "@canvasjs/react-charts";
+import CanvasJSReact from "../assets/canvasjs-chart-3.7.19/canvasjs.react";
 
 import { HeartBeatOptions } from "../components/chartOptions/heartBeatOptions";
 import { SocOptions } from "../components/chartOptions/socOptions";
@@ -50,7 +50,7 @@ const PnSummaryFEX0100 = () => {
         </div>
 
         {/* 內容 */}
-        <div className="content grid md:grid-rows-3 md:grid-cols-6 md:gap-y-20 md:gap-x-8">
+        <div className="content grid md:grid-rows-3 md:grid-cols-6 md:gap-y-10 md:gap-x-8">
           {/* 表格 */}
           <div className="lg:w-full md:mb-auto md:col-span-2 md:row-span-1">
             <table className="lg:w-full text-[#f3f3f3]">
@@ -96,12 +96,12 @@ const PnSummaryFEX0100 = () => {
 
           {/* MBMU 心跳 */}
           <div className="MBMUheartBeat md:col-span-2 md:row-span-1">
-            <CanvasJSChart options={HeartBeatOptions} />
+            <CanvasJSChart options={HeartBeatOptions()} />
           </div>
 
           {/* SOC 圖表 */}
           <div className="SOC md:col-span-2 md:row-span-1">
-            <CanvasJSChart options={SocOptions} />
+            <CanvasJSChart options={SocOptions()} />
           </div>
 
           {/* 表格 */}
@@ -135,12 +135,12 @@ const PnSummaryFEX0100 = () => {
 
           {/* 電壓折線圖 */}
           <div className="md:col-span-3 md:row-span-1">
-            <CanvasJSChart options={VoltageOptions} />
+            <CanvasJSChart options={VoltageOptions()} />
           </div>
 
           {/* 電流折線圖 */}
           <div className="md:col-span-3 md:row-span-1">
-            <CanvasJSChart options={CurrentOptions} />
+            <CanvasJSChart options={CurrentOptions()} />
           </div>
         </div>
       </div>

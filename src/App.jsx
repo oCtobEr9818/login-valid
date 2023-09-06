@@ -20,7 +20,7 @@ import { AuthProvider } from "./context/AuthContext";
 
 export default function App() {
   return (
-    <div className="bg-slate-100 min-h-screen w-full m-0 p-0">
+    <div className="bg-body min-h-screen w-full m-0 p-0">
       <BrowserRouter basename="/">
         <AuthProvider>
           <Routes>
