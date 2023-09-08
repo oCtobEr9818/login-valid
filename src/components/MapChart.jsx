@@ -12,14 +12,20 @@ import { markers } from "./markers";
 
 const MapChart = () => {
   const taiwanCenter = [120.982, 23.973];
-  const [selectedMarker, setSelectedMarker] = useState(null);
+  const [isMarkerHovered, setIsMarkerHovered] = useState(null);
+  const [selectedMarker, setSelectedMarker] = useState(false);
+  const [markerColors, setMarkerColors] = useState(
+    markers.map((marker) => marker.markerColor)
+  );
 
-  const handleMarkerHover = (marker) => {
-    setSelectedMarker(marker);
+  const handleChangeMarkersColor = (marker) => {
+    setIsMarkerHovered(marker);
+    setSelectedMarker(true);
   };
 
-  const handleMarkerLeave = () => {
-    setSelectedMarker(null);
+  const handleResetMarkersColor = () => {
+    setIsMarkerHovered(null);
+    setSelectedMarker(false);
   };
 
   const getInfoCardPosition = (coordinates) => {
@@ -35,7 +41,7 @@ const MapChart = () => {
         projection="geoMercator"
         projectionConfig={{
           center: taiwanCenter,
-          scale: 6000,
+          scale: 5000,
         }}
         className="w-full m-auto z-10"
       >
@@ -71,64 +77,66 @@ const MapChart = () => {
             }
           </Geographies>
 
-          {markers.map(
-            ({ route, name, coordinates, markerOffset, markerColor }) => (
-              <Marker
-                key={name}
-                coordinates={coordinates}
-                onMouseEnter={() => {
-                  handleMarkerHover(name);
+          {markers.map(({ route, name, coordinates, markerOffset, id }) => (
+            <Marker
+              key={name}
+              coordinates={coordinates}
+              onMouseEnter={() => {
+                handleChangeMarkersColor(name);
 
-                  markers.forEach((marker) => {
-                    if (marker.name === name) {
-                      marker.markerColor = "#0AD";
-                    }
-                  });
-                }}
-                onMouseLeave={() => {
-                  handleMarkerLeave();
+                setMarkerColors((prevColor) =>
+                  prevColor.map((color, index) =>
+                    index === id ? "#0AD" : color
+                  )
+                );
+              }}
+              onMouseLeave={() => {
+                handleResetMarkersColor();
 
-                  markers.forEach((marker) => {
-                    if (marker.name === name) {
-                      marker.markerColor = "#f00";
-                    }
-                  });
-                }}
-              >
-                <Link to={route}>
-                  {/* 紅色標記點 */}
-                  <g
-                    fill="none"
-                    stroke={markerColor}
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    transform="translate(-12, -24)"
-                    cursor="pointer"
-                  >
-                    <circle cx="12" cy="10" r="3" />
-                    <path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 6.9 8 11.7z" />
-                  </g>
-                  {/* 案場名稱 */}
-                  <text
-                    textAnchor="middle"
-                    x={markerOffset.x}
-                    y={markerOffset.y}
-                    style={{
-                      fontFamily: "Arial",
-                      fill: "#fcfcfc",
-                      cursor: "pointer",
-                    }}
-                  >
-                    {name}
-                  </text>
-                </Link>
-              </Marker>
-            )
-          )}
+                setMarkerColors((prevColor) =>
+                  prevColor.map((color, index) =>
+                    index === id ? "#f00" : color
+                  )
+                );
+              }}
+            >
+              <Link to={route}>
+                {/* 紅色標記點 */}
+                <g
+                  fill="none"
+                  stroke={
+                    selectedMarker && isMarkerHovered === name
+                      ? "#0AD"
+                      : markerColors[id]
+                  }
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  transform="translate(-12, -24)"
+                  cursor="pointer"
+                >
+                  <circle cx="12" cy="10" r="3" />
+                  <path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 6.9 8 11.7z" />
+                </g>
+                {/* 案場名稱 */}
+                <text
+                  textAnchor="middle"
+                  x={markerOffset.x}
+                  y={markerOffset.y}
+                  style={{
+                    fontFamily: "Arial",
+                    fill: "#fcfcfc",
+                    cursor: "pointer",
+                  }}
+                >
+                  {name}
+                </text>
+              </Link>
+            </Marker>
+          ))}
 
           {/* 懸停在標記點或地名的卡片資訊 */}
-          {selectedMarker &&
+          {isMarkerHovered &&
             markers.map(
               ({
                 id,
@@ -138,7 +146,7 @@ const MapChart = () => {
                 cardCoordinates,
                 textOutline,
               }) =>
-                name === selectedMarker && (
+                name === isMarkerHovered && (
                   <>
                     <g
                       key={id}
@@ -191,8 +199,8 @@ const MapChart = () => {
                         height="90"
                         xlinkHref={cardCoordinates.image.urL}
                       />
-                      {/* 地標外框 */}
                     </g>
+                    {/* 地標外框 */}
                     <rect
                       x={textOutline.x}
                       y={textOutline.y}

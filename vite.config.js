@@ -10,6 +10,7 @@ dns.setDefaultResultOrder("verbatim");
 export default defineConfig({
   plugins: [
     react(),
+    // 加入這段才能使用CanvasJS
     commonjs({
       filter(id) {
         if (

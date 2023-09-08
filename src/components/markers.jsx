@@ -1,7 +1,7 @@
 export const markers = [
   {
-    id: "1",
-    route: "/pn-summary-FEX0102",
+    id: "0",
+    route: "/pn-list/pn-summary-FEX0102",
     name: "華城大東民心455",
     projectName: "FEX0102",
     markerOffset: { x: 75, y: 18 },
@@ -44,8 +44,8 @@ export const markers = [
     },
   },
   {
-    id: "2",
-    route: "/pn-summary-FEX0101",
+    id: "1",
+    route: "/pn-list/pn-summary-FEX0101",
     name: "華城大東民心244",
     projectName: "FEX0101",
     markerOffset: { x: 85, y: -15 },
@@ -88,8 +88,8 @@ export const markers = [
     },
   },
   {
-    id: "3",
-    route: "/pn-summary-FEX0100",
+    id: "2",
+    route: "/pn-list/pn-summary-FEX0100",
     name: "華城觀音三廠",
     projectName: "FEX0100",
     markerOffset: { x: -65, y: -10 },
@@ -132,8 +132,8 @@ export const markers = [
     },
   },
   {
-    id: "4",
-    route: "/pn-summary-TCN01A1",
+    id: "3",
+    route: "/pn-list/pn-summary-TCN01A1",
     name: "M4彰濱",
     projectName: "TCN01A1",
     markerOffset: { x: -40, y: -14 },
@@ -170,8 +170,8 @@ export const markers = [
       },
       image: {
         x: "75",
-        y: "170",
-        urL: "/image/logo.png",
+        y: "165",
+        urL: "/image/彰濱.jpg",
       },
     },
   },

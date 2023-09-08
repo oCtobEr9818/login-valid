@@ -3,12 +3,13 @@ import { Link, useLocation } from "react-router-dom";
 
 const navs = [
   {
-    name: "首頁",
-    url: "/",
-  },
-  {
     name: "PN 列表",
     url: "/pn-list",
+    subRoutes: [
+      {
+        url: "/pn-summary-FEX0100",
+      },
+    ],
   },
   {
     name: "事件通知",
@@ -36,18 +37,26 @@ const SideBar = () => {
     <>
       <div className="sideBar w-24 md:w-64 min-h-screen bg-[#212327] shadow-sideBar z-10">
         <img
-          src={`./image/${isSmallScreen ? "logo2" : "logo-dark"}.png`}
+          src={`/image/${isSmallScreen ? "logo2" : "logo-dark"}.png`}
           alt="明曜科技Logo"
           className="w-11/12 h-[68px] py-2 m-auto border-b border-gray-300 object-contain"
         />
 
         <div className="sideBarOptions h-auto w-auto px-0 md:px-6 pt-6 flex flex-col">
+          <Link
+            to="/"
+            className={`w-[90%] md:w-full px-2 py-2 mx-auto mt-4 block border-options md:rounded-lg text-center text-mainText break-word hover:-translate-y-1 md:hover:-translate-y-0 md:hover:text-black md:hover:bg-[#fcfcfc] transition-all duration-200 ${
+              location.pathname === "/" ? "active" : ""
+            }`}
+          >
+            首頁
+          </Link>
           {navs.map((nav, i) => (
             <Link
               to={nav.url}
               key={i}
               className={`w-[90%] md:w-full px-2 py-2 mx-auto mt-4 block border-options md:rounded-lg text-center text-mainText break-word hover:-translate-y-1 md:hover:-translate-y-0 md:hover:text-black md:hover:bg-[#fcfcfc] transition-all duration-200 ${
-                location.pathname === nav.url ? "active" : ""
+                location.pathname.startsWith(nav.url) ? "active" : ""
               }`}
             >
               {nav.name}

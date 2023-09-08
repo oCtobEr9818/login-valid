@@ -9,7 +9,9 @@ const PnSummaryTCN01A2 = () => {
 
       <div className=" h-auto w-full mt-4">
         <div className="my-4 flex items-start lg:justify-between lg:flex-row flex-col">
-          <h2 className="text-[32px] text-center font-bold">TCN01A2</h2>
+          <h2 className="text-[32px] text-center font-bold text-mainText">
+            TCN01A2
+          </h2>
         </div>
       </div>
     </div>

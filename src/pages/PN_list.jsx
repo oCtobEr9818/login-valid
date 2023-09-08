@@ -53,7 +53,7 @@ const PnList = () => {
           <td className="pnList-table-td">{data.updated_at}</td>
           <td className="pnList-table-td flex items-center justify-start">
             <Link
-              to={`/pn-summary-${data.pn_name}`}
+              to={`/pn-list/pn-summary-${data.pn_name}`}
               className="lg:p-2.5 p-1 rounded-md bg-blue-500 hover:bg-blue-600 text-slate-200 text-sm lg:text-base"
             >
               詳細資訊
@@ -112,7 +112,7 @@ const PnList = () => {
   };
 
   return (
-    <div className="w-full h-full py-6 px-12">
+    <div className="w-full h-full pt-6 px-12">
       <div className="h-auto pl-4 py-4 bg-slate-200 rounded-md text-sm select-none">
         <label className=" opacity-80">首頁{" > "}PN 列表</label>
       </div>

@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 
-import axiosPnListApi from "../api/axiosPnListApi";
-import CanvasJSReact from "../assets/canvasjs-chart-3.7.19/canvasjs.react";
+import axiosPnListApi from "../../api/axiosPnListApi";
+import CanvasJSReact from "../../assets/canvasjs-chart-3.7.19/canvasjs.react";
 
-import { HeartBeatOptions } from "../components/chartOptions/heartBeatOptions";
-import { SocOptions } from "../components/chartOptions/socOptions";
-import { VoltageOptions } from "../components/chartOptions/voltageOptions";
-import { CurrentOptions } from "../components/chartOptions/currentOptions";
+import { HeartBeatOptions } from "../../components/chartOptions/heartBeatOptions";
+import { SocOptions } from "../../components/chartOptions/socOptions";
+import { VoltageOptions } from "../../components/chartOptions/voltageOptions";
+import { CurrentOptions } from "../../components/chartOptions/currentOptions";
 
 const PnSummaryFEX0100 = () => {
   const [snFEX0100, setSnFEX0100] = useState([]);
@@ -34,7 +34,7 @@ const PnSummaryFEX0100 = () => {
   const CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
   return (
-    <div className="w-full h-full py-6 px-12">
+    <div className="w-full pt-6 pb-40 px-12">
       {/* 導覽列 */}
       <div className="h-auto pl-4 py-4 bg-slate-200 rounded-md text-sm select-none">
         <label className="opacity-80">

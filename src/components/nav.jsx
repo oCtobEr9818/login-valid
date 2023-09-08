@@ -21,7 +21,7 @@ const Nav = () => {
 
   return (
     <>
-      <nav className="navBar bg-[#212327] border-0 py-4 shadow-nav relative">
+      <nav className="navBar w-full bg-[#212327] py-4 shadow-nav relative z-10">
         <div className="container mx-auto my-4 flex flex-wrap items-center justify-end ">
           <div className="w-full block">
             {/* 通知中心鈴鐺圖示 */}
