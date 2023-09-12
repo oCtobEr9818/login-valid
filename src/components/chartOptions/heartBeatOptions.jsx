@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export const HeartBeatOptions = () => {
+export const HeartBeatOptions = (heartBeat) => {
   const [lineVisibility, setLineVisibility] = useState({
     "MBMU 心跳": true,
   });
@@ -16,7 +16,6 @@ export const HeartBeatOptions = () => {
 
   const HeartBeatOptions = {
     theme: "dark1",
-    animationEnabled: true,
     zoomEnabled: true, // 縮放
     exportEnabled: true, // 存成圖檔
     title: {
@@ -25,11 +24,7 @@ export const HeartBeatOptions = () => {
     axisY: {
       title: "heart beat (%)",
       suffix: "%",
-    },
-    axisX: {
-      title: "Week of Year",
-      prefix: "W",
-      interval: 2, // 刻度間距
+      minimum: 0,
     },
     legend: {
       fontFamily: "Arial",
@@ -46,35 +41,11 @@ export const HeartBeatOptions = () => {
     data: [
       {
         type: "line",
-        toolTipContent: "Week {x}: {y}%",
+        toolTipContent: "時間：{label}<br />{name}: {y} %",
         name: "MBMU 心跳",
         showInLegend: true,
         visible: lineVisibility["MBMU 心跳"],
-        dataPoints: [
-          { x: 1, y: 64 },
-          { x: 2, y: 61 },
-          { x: 3, y: 64 },
-          { x: 4, y: 62 },
-          { x: 5, y: 64 },
-          { x: 6, y: 60 },
-          { x: 7, y: 58 },
-          { x: 8, y: 59 },
-          { x: 9, y: 53 },
-          { x: 10, y: 54 },
-          { x: 11, y: 61 },
-          { x: 12, y: 60 },
-          { x: 13, y: 55 },
-          { x: 14, y: 60 },
-          { x: 15, y: 56 },
-          { x: 16, y: 60 },
-          { x: 17, y: 59.5 },
-          { x: 18, y: 63 },
-          { x: 19, y: 58 },
-          { x: 20, y: 54 },
-          { x: 21, y: 59 },
-          { x: 22, y: 64 },
-          { x: 23, y: 59 },
-        ],
+        dataPoints: heartBeat,
       },
     ],
   };

@@ -7,7 +7,7 @@ export const markers = [
     markerOffset: { x: 75, y: 18 },
     markerColor: "#f00",
     textOutline: {
-      x: "475",
+      x: "464",
       y: "298",
       width: "130",
     },
@@ -51,7 +51,7 @@ export const markers = [
     markerOffset: { x: 85, y: -15 },
     markerColor: "#f00",
     textOutline: {
-      x: "485",
+      x: "474",
       y: "261",
       width: "130",
     },
@@ -95,8 +95,8 @@ export const markers = [
     markerOffset: { x: -65, y: -10 },
     markerColor: "#f00",
     textOutline: {
-      x: "295",
-      y: "153",
+      x: "293",
+      y: "173",
       width: "105",
     },
     coordinates: [121.1, 25],
@@ -136,11 +136,11 @@ export const markers = [
     route: "/pn-list/pn-summary-TCN01A1",
     name: "M4彰濱",
     projectName: "TCN01A1",
-    markerOffset: { x: -40, y: -14 },
+    markerOffset: { x: -44, y: -14 },
     markerColor: "#f00",
     textOutline: {
-      x: "250",
-      y: "293",
+      x: "260",
+      y: "289",
       width: "60",
     },
     coordinates: [120.22, 23.75],

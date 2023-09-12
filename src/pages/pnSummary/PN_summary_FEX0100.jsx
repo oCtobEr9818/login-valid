@@ -9,22 +9,118 @@ import { VoltageOptions } from "../../components/chartOptions/voltageOptions";
 import { CurrentOptions } from "../../components/chartOptions/currentOptions";
 
 const PnSummaryFEX0100 = () => {
-  const [snFEX0100, setSnFEX0100] = useState([]);
+  const [pnFEX0100, setPnFEX0100] = useState([]);
+
+  const [socDatas, setSocDatas] = useState([]);
+  const [heartBeat, setHeartBeat] = useState([]);
+  const [systemStatus, setSystemStatus] = useState(0);
+  const [bmsPowerOn, setBmsPowerOn] = useState(0);
+  const [bmsStatus, setBmsStatus] = useState(0);
+  const [emsCmd, setEmsCmd] = useState(0);
+  const [avgCellVoltage, setAvgCellVoltage] = useState([]);
+  const [sysCurrent, setSysCurrent] = useState([]);
+  const [maxChargeCurrentAllow, setMaxChargeCurrentAllow] = useState([]);
+  const [maxDisChargeCurrentAllow, setMaxDisChargeCurrentAllow] = useState([]);
+  const [updatedTime, setUpdatedTime] = useState("");
 
   useEffect(() => {
+    // 進入頁面先獲取第一筆資料
     getPnListDatas();
+
+    // 每5秒向後端發送一次request
+    const interval = setInterval(() => {
+      getPnListDatas();
+    }, 30000);
+
+    return () => clearInterval(interval);
   }, []);
 
   const getPnListDatas = async () => {
     try {
-      const snResponse = await axiosPnListApi.get("/pn");
-      const snJSON = snResponse.data.data;
+      const pnResponse = await axiosPnListApi.get("/pn");
+      const pnJSON = pnResponse.data.data;
 
-      for (const element of snJSON) {
+      for (const element of pnJSON) {
         if (element.pn_name === "FEX0100") {
-          setSnFEX0100(element);
+          setPnFEX0100(element);
         }
       }
+
+      const deviceResponse3 = await axiosPnListApi.get(`/pn/1/sn/1/device/all`);
+      const deviceDatas = deviceResponse3.data.data;
+      const MbmuJSON = JSON.parse(deviceDatas[0].data);
+      const chartLabel = deviceDatas[0].created_at?.slice(11); // 圖表時間
+
+      // SOC
+      deviceDatas.forEach((data, index) => {
+        const dataJSON = JSON.parse(data.data);
+        setSocDatas((prev) => [
+          ...prev,
+          {
+            x: data.device_id,
+            y: Number(dataJSON.SOC),
+            time: chartLabel,
+            label: data.device_name,
+          },
+        ]);
+      });
+
+      // BMS 心跳
+      setHeartBeat((prev) =>
+        [
+          ...prev,
+          {
+            y: Number(MbmuJSON.BMSHeartBeat),
+            label: chartLabel,
+          },
+        ].filter((curr, i, arr) => !i || curr.label !== arr[i - 1].label)
+      );
+      // 電芯平均電壓
+      setAvgCellVoltage((prev) =>
+        [
+          ...prev,
+          {
+            y: Number(MbmuJSON.AvgCellVoltage),
+            label: chartLabel,
+          },
+        ].filter((curr, i, arr) => !i || curr.label !== arr[i - 1].label)
+      );
+      // 系統電流
+      setSysCurrent((prev) =>
+        [
+          ...prev,
+          {
+            y: Number(MbmuJSON.SysCurrent),
+            label: chartLabel,
+          },
+        ].filter((curr, i, arr) => !i || curr.label !== arr[i - 1].label)
+      );
+      // 允許最大充電電流
+      setMaxChargeCurrentAllow((prev) =>
+        [
+          ...prev,
+          {
+            y: Number(MbmuJSON.MaxChargeCurrentAllow),
+            label: chartLabel,
+          },
+        ].filter((curr, i, arr) => !i || curr.label !== arr[i - 1].label)
+      );
+      // 允許最大放電電流
+      setMaxDisChargeCurrentAllow((prev) =>
+        [
+          ...prev,
+          {
+            y: Number(MbmuJSON.MaxDischargeCurrentAllow),
+            label: chartLabel,
+          },
+        ].filter((curr, i, arr) => !i || curr.label !== arr[i - 1].label)
+      );
+
+      setSystemStatus(MbmuJSON.SysStatus); // 系統狀態
+      setBmsPowerOn(MbmuJSON.BMSPowerOn); // 上下電狀態
+      setBmsStatus(MbmuJSON.BMSStatus); // MBMU 狀態
+      setEmsCmd(MbmuJSON.EMSCmd); // EMS 指令
+      setUpdatedTime(deviceDatas[0].created_at); // 資料更新時間
     } catch (err) {
       console.error(err);
     }
@@ -43,6 +139,7 @@ const PnSummaryFEX0100 = () => {
       </div>
 
       <div className="w-full mt-4">
+        {/* 專案名稱 */}
         <div className="my-4">
           <h2 className="text-[32px] text-left font-bold text-mainText">
             FEX0100
@@ -56,29 +153,29 @@ const PnSummaryFEX0100 = () => {
             <table className="lg:w-full text-[#f3f3f3]">
               <thead>
                 <tr>
-                  <th className="pnList-table-th">PN</th>
+                  <th className="pnList-table-th pr-6">PN</th>
                   <td className="pnList-table-td border-l-1 pl-12">
-                    {snFEX0100.pn_name}
+                    {pnFEX0100.pn_name}
                   </td>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <th className="pnList-table-th">簡稱</th>
+                  <th className="pnList-table-th pr-6">簡稱</th>
                   <td className="pnList-table-td border-l-1 pl-12">
-                    {snFEX0100.nickname}
+                    {pnFEX0100.nickname}
                   </td>
                 </tr>
                 <tr>
-                  <th className="pnList-table-th">地點</th>
+                  <th className="pnList-table-th pr-6">地點</th>
                   <td className="pnList-table-td border-l-1 pl-12">
-                    {snFEX0100.location}
+                    {pnFEX0100.location}
                   </td>
                 </tr>
                 <tr>
-                  <th className="pnList-table-th">上傳時間</th>
+                  <th className="pnList-table-th pr-6">上傳時間</th>
                   <td className="pnList-table-td border-l-1 pl-12">
-                    {snFEX0100.updated_at}
+                    {pnFEX0100.updated_at}
                   </td>
                 </tr>
               </tbody>
@@ -96,15 +193,15 @@ const PnSummaryFEX0100 = () => {
 
           {/* MBMU 心跳 */}
           <div className="MBMUheartBeat md:col-span-2 md:row-span-1">
-            <CanvasJSChart options={HeartBeatOptions()} />
+            <CanvasJSChart options={HeartBeatOptions(heartBeat)} />
           </div>
 
           {/* SOC 圖表 */}
           <div className="SOC md:col-span-2 md:row-span-1">
-            <CanvasJSChart options={SocOptions()} />
+            <CanvasJSChart options={SocOptions(socDatas)} />
           </div>
 
-          {/* 表格 */}
+          {/* 整體狀態表 */}
           <div className="lg:w-1/2 m-auto md:col-span-2 md:row-span-1">
             <h2 className="text-center text-[32px] text-[#f3f3f3] font-bold mb-4 -mt-4">
               整體狀態
@@ -112,22 +209,34 @@ const PnSummaryFEX0100 = () => {
             <table className="lg:w-full text-[#f3f3f3]">
               <thead>
                 <tr>
-                  <th className="pnList-table-th">系統狀態</th>
-                  <td className="pnList-table-td border-l-1 pl-12">123</td>
+                  <th className="pnList-table-th pr-4">系統狀態</th>
+                  <td className="pnList-table-td border-l-1 pl-12">
+                    {systemStatus}
+                  </td>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <th className="pnList-table-th">上下電狀態</th>
-                  <td className="pnList-table-td border-l-1 pl-12">456</td>
+                  <th className="pnList-table-th pr-4">上下電狀態</th>
+                  <td className="pnList-table-td border-l-1 pl-12">
+                    {bmsPowerOn}
+                  </td>
                 </tr>
                 <tr>
-                  <th className="pnList-table-th">MBMU 狀態</th>
-                  <td className="pnList-table-td border-l-1 pl-12">789</td>
+                  <th className="pnList-table-th pr-4">MBMU 狀態</th>
+                  <td className="pnList-table-td border-l-1 pl-12">
+                    {bmsStatus}
+                  </td>
                 </tr>
                 <tr>
-                  <th className="pnList-table-th">EMS 指令</th>
-                  <td className="pnList-table-td border-l-1 pl-12">147</td>
+                  <th className="pnList-table-th pr-4">EMS 指令</th>
+                  <td className="pnList-table-td border-l-1 pl-12">{emsCmd}</td>
+                </tr>
+                <tr>
+                  <th className="pnList-table-th pr-4">資料更新時間</th>
+                  <td className="pnList-table-td border-l-1 pl-12">
+                    {updatedTime}
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -135,12 +244,18 @@ const PnSummaryFEX0100 = () => {
 
           {/* 電壓折線圖 */}
           <div className="md:col-span-3 md:row-span-1">
-            <CanvasJSChart options={VoltageOptions()} />
+            <CanvasJSChart options={VoltageOptions(avgCellVoltage)} />
           </div>
 
           {/* 電流折線圖 */}
           <div className="md:col-span-3 md:row-span-1">
-            <CanvasJSChart options={CurrentOptions()} />
+            <CanvasJSChart
+              options={CurrentOptions(
+                sysCurrent,
+                maxChargeCurrentAllow,
+                maxDisChargeCurrentAllow
+              )}
+            />
           </div>
         </div>
       </div>

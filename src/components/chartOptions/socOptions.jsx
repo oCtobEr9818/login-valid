@@ -1,35 +1,56 @@
-import { useState } from "react";
+// import CanvasJSReact from "../../assets/canvasjs-chart-3.7.19/canvasjs.react";
 
-export const SocOptions = () => {
-  const [lineVisibility, setLineVisibility] = useState({
-    SOC: true,
-  });
-
-  // 顯示or隱藏圖表線段
-  const mantainLineDisplayState = (e) => {
-    const seriesName = e.dataSeries.name;
-    setLineVisibility((prevVisibility) => ({
-      ...prevVisibility,
-      [seriesName]: !prevVisibility[seriesName],
-    }));
-  };
+export const SocOptions = (socDatas) => {
+  // CanvasJSReact.addColorSet("socChart", [
+  //   "#0066CC",
+  //   "#00AEAE",
+  //   "#02C874",
+  //   "#C6A300",
+  //   "#EA7500",
+  //   "#9F4D95",
+  //   "#CE0000",
+  //   "#5B5B5B",
+  //   "#D9B3B3",
+  //   "#C7C7E2",
+  //   "#A6FFFF",
+  //   "#F0F0F0",
+  //   "#D3A4FF",
+  // ]);
+  const colorSet = [
+    "#0066CC",
+    "#00AEAE",
+    "#02C874",
+    "#C6A300",
+    "#EA7500",
+    "#9F4D95",
+    "#CE0000",
+    "#5B5B5B",
+    "#D9B3B3",
+    "#C7C7E2",
+    "#A6FFFF",
+    "#F0F0F0",
+    "#D3A4FF",
+  ];
 
   const SocOptions = {
     theme: "dark1",
-    animationEnabled: true,
     zoomEnabled: true, // 縮放
     exportEnabled: true, // 存成圖檔
+    colorSet: colorSet,
     title: {
       text: "SOC 圖表",
+    },
+    axisY: {
+      title: "SOC (%)",
+      suffix: "%",
+      maximum: 100,
+      minimum: 0,
     },
     legend: {
       fontFamily: "Arial",
       fontSize: 16,
       cursor: "pointer",
       horizontalAlign: "center",
-      itemMaxWidth: 170,
-      itemWrap: true,
-      itemclick: mantainLineDisplayState,
     },
     toolTip: {
       shared: true,
@@ -37,17 +58,10 @@ export const SocOptions = () => {
     data: [
       {
         type: "column",
-        toolTipContent: "Time：{label}<br />{name}：{y}",
-        name: "SOC",
-        showInLegend: true,
-        visible: lineVisibility["SOC"],
-        dataPoints: [
-          { label: "Apple", y: 10 },
-          { label: "Orange", y: 15 },
-          { label: "Banana", y: 25 },
-          { label: "Mango", y: 30 },
-          { label: "Grape", y: 28 },
-        ],
+        // indexLabel: "{y} %",
+        // indexLabelPlacement: "outside",
+        toolTipContent: "時間：{time}<br />{label}：{y} %",
+        dataPoints: socDatas,
       },
     ],
   };
