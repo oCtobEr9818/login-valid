@@ -11,6 +11,7 @@ import { CurrentOptions } from "../../components/chartOptions/currentOptions";
 const PnSummaryFEX0100 = () => {
   const [pnFEX0100, setPnFEX0100] = useState([]);
 
+  const [soc, setSoc] = useState([]);
   const [socDatas, setSocDatas] = useState([]);
   const [heartBeat, setHeartBeat] = useState([]);
   const [systemStatus, setSystemStatus] = useState(0);
@@ -30,7 +31,7 @@ const PnSummaryFEX0100 = () => {
     // 每5秒向後端發送一次request
     const interval = setInterval(() => {
       getPnListDatas();
-    }, 30000);
+    }, 5000);
 
     return () => clearInterval(interval);
   }, []);
@@ -46,81 +47,93 @@ const PnSummaryFEX0100 = () => {
         }
       }
 
-      const deviceResponse3 = await axiosPnListApi.get(`/pn/1/sn/1/device/all`);
-      const deviceDatas = deviceResponse3.data.data;
-      const MbmuJSON = JSON.parse(deviceDatas[0].data);
-      const chartLabel = deviceDatas[0].created_at?.slice(11); // 圖表時間
+      const deviceResponse = await axiosPnListApi.get(`/pn/3/sn/3/device/all`);
+      if (deviceResponse.status === 200) {
+        const deviceDatas = deviceResponse.data.data;
+        const MbmuJSON = JSON.parse(deviceDatas[0].data);
+        const chartLabel = deviceDatas[0].created_at?.slice(11); // 圖表時間
 
-      // SOC
-      deviceDatas.forEach((data, index) => {
-        const dataJSON = JSON.parse(data.data);
-        setSocDatas((prev) => [
-          ...prev,
-          {
+        // SOC 資料集
+        const updatedSocDatas = deviceDatas.map((data) => {
+          const dataJSON = JSON.parse(data.data);
+          return {
             x: data.device_id,
             y: Number(dataJSON.SOC),
             time: chartLabel,
             label: data.device_name,
-          },
-        ]);
-      });
+            color: "#429200",
+          };
+        });
+        setSocDatas(updatedSocDatas);
 
-      // BMS 心跳
-      setHeartBeat((prev) =>
-        [
-          ...prev,
-          {
-            y: Number(MbmuJSON.BMSHeartBeat),
-            label: chartLabel,
-          },
-        ].filter((curr, i, arr) => !i || curr.label !== arr[i - 1].label)
-      );
-      // 電芯平均電壓
-      setAvgCellVoltage((prev) =>
-        [
-          ...prev,
-          {
-            y: Number(MbmuJSON.AvgCellVoltage),
-            label: chartLabel,
-          },
-        ].filter((curr, i, arr) => !i || curr.label !== arr[i - 1].label)
-      );
-      // 系統電流
-      setSysCurrent((prev) =>
-        [
-          ...prev,
-          {
-            y: Number(MbmuJSON.SysCurrent),
-            label: chartLabel,
-          },
-        ].filter((curr, i, arr) => !i || curr.label !== arr[i - 1].label)
-      );
-      // 允許最大充電電流
-      setMaxChargeCurrentAllow((prev) =>
-        [
-          ...prev,
-          {
-            y: Number(MbmuJSON.MaxChargeCurrentAllow),
-            label: chartLabel,
-          },
-        ].filter((curr, i, arr) => !i || curr.label !== arr[i - 1].label)
-      );
-      // 允許最大放電電流
-      setMaxDisChargeCurrentAllow((prev) =>
-        [
-          ...prev,
-          {
-            y: Number(MbmuJSON.MaxDischargeCurrentAllow),
-            label: chartLabel,
-          },
-        ].filter((curr, i, arr) => !i || curr.label !== arr[i - 1].label)
-      );
+        // SOC 單獨資料
+        setSoc((prev) =>
+          [
+            ...prev,
+            {
+              y: Number(MbmuJSON.SOC),
+              label: chartLabel,
+              color: "#429200",
+            },
+          ].filter((curr, i, arr) => !i || curr.label !== arr[i - 1].label)
+        );
+        // BMS 心跳
+        setHeartBeat((prev) =>
+          [
+            ...prev,
+            {
+              y: Number(MbmuJSON.BMSHeartBeat),
+              label: chartLabel,
+            },
+          ].filter((curr, i, arr) => !i || curr.label !== arr[i - 1].label)
+        );
+        // 系統電壓
+        setAvgCellVoltage((prev) =>
+          [
+            ...prev,
+            {
+              y: Number(MbmuJSON.SysVoltag),
+              label: chartLabel,
+            },
+          ].filter((curr, i, arr) => !i || curr.label !== arr[i - 1].label)
+        );
+        // 系統電流
+        setSysCurrent((prev) =>
+          [
+            ...prev,
+            {
+              y: Number(MbmuJSON.SysCurrent),
+              label: chartLabel,
+            },
+          ].filter((curr, i, arr) => !i || curr.label !== arr[i - 1].label)
+        );
+        // 允許最大充電電流
+        setMaxChargeCurrentAllow((prev) =>
+          [
+            ...prev,
+            {
+              y: Number(MbmuJSON.MaxChargeCurrentAllow),
+              label: chartLabel,
+            },
+          ].filter((curr, i, arr) => !i || curr.label !== arr[i - 1].label)
+        );
+        // 允許最大放電電流
+        setMaxDisChargeCurrentAllow((prev) =>
+          [
+            ...prev,
+            {
+              y: Number(MbmuJSON.MaxDischargeCurrentAllow),
+              label: chartLabel,
+            },
+          ].filter((curr, i, arr) => !i || curr.label !== arr[i - 1].label)
+        );
 
-      setSystemStatus(MbmuJSON.SysStatus); // 系統狀態
-      setBmsPowerOn(MbmuJSON.BMSPowerOn); // 上下電狀態
-      setBmsStatus(MbmuJSON.BMSStatus); // MBMU 狀態
-      setEmsCmd(MbmuJSON.EMSCmd); // EMS 指令
-      setUpdatedTime(deviceDatas[0].created_at); // 資料更新時間
+        setSystemStatus(MbmuJSON.SysStatus); // 系統狀態
+        setBmsPowerOn(MbmuJSON.BMSPowerOn); // 上下電狀態
+        setBmsStatus(MbmuJSON.BMSStatus); // MBMU 狀態
+        setEmsCmd(MbmuJSON.EMSCmd); // EMS 指令
+        setUpdatedTime(deviceDatas[0].created_at); // 資料更新時間
+      }
     } catch (err) {
       console.error(err);
     }
@@ -187,7 +200,7 @@ const PnSummaryFEX0100 = () => {
             <img
               className="object-contain w-1/2"
               src="/image/觀音華城三廠.jpg"
-              alt="觀音華城三廠案照片"
+              alt="觀音華城三廠照片"
             />
           </div>
 
@@ -244,7 +257,7 @@ const PnSummaryFEX0100 = () => {
 
           {/* 電壓折線圖 */}
           <div className="md:col-span-3 md:row-span-1">
-            <CanvasJSChart options={VoltageOptions(avgCellVoltage)} />
+            <CanvasJSChart options={VoltageOptions(avgCellVoltage, soc)} />
           </div>
 
           {/* 電流折線圖 */}
@@ -253,7 +266,8 @@ const PnSummaryFEX0100 = () => {
               options={CurrentOptions(
                 sysCurrent,
                 maxChargeCurrentAllow,
-                maxDisChargeCurrentAllow
+                maxDisChargeCurrentAllow,
+                soc
               )}
             />
           </div>

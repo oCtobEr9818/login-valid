@@ -95,10 +95,7 @@ const Nav = () => {
                     aria-labelledby="dropdownDefaultButton"
                   >
                     <li>
-                      <button
-                        onClick={logout}
-                        className="block px-2 py-2 mx-auto"
-                      >
+                      <button onClick={logout} className="w-full py-2">
                         登出
                       </button>
                     </li>

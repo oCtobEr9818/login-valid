@@ -22,8 +22,7 @@ export const HeartBeatOptions = (heartBeat) => {
       text: "MBMU 心跳",
     },
     axisY: {
-      title: "heart beat (%)",
-      suffix: "%",
+      title: "heart beat",
       minimum: 0,
     },
     legend: {
@@ -41,7 +40,7 @@ export const HeartBeatOptions = (heartBeat) => {
     data: [
       {
         type: "line",
-        toolTipContent: "時間：{label}<br />{name}: {y} %",
+        toolTipContent: "時間：{label}<br />{name}: {y}",
         name: "MBMU 心跳",
         showInLegend: true,
         visible: lineVisibility["MBMU 心跳"],
