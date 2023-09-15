@@ -2,7 +2,7 @@ import { useState } from "react";
 
 export const VoltageOptions = (avgCellVoltage, soc) => {
   const [lineVisibility, setLineVisibility] = useState({
-    電芯平均電壓: true,
+    系統電壓: true,
     "MBMU SOC": true,
   });
 
@@ -26,6 +26,7 @@ export const VoltageOptions = (avgCellVoltage, soc) => {
     axisY: {
       title: "電壓 (V)",
       suffix: "(V)",
+      minimum: 0,
     },
     axisY2: {
       title: "MBMU SOC (%)",
@@ -48,11 +49,11 @@ export const VoltageOptions = (avgCellVoltage, soc) => {
     data: [
       {
         type: "spline",
-        name: "電芯平均電壓",
+        name: "系統電壓",
         color: "#B9B9FF",
         toolTipContent: "時間：{label}<br />{name}：{y} V",
         showInLegend: true,
-        visible: lineVisibility["電芯平均電壓"],
+        visible: lineVisibility["系統電壓"],
         dataPoints: avgCellVoltage,
       },
       {

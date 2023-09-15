@@ -56,7 +56,7 @@ export const CurrentOptions = (
       {
         type: "spline",
         name: "系統電流",
-        color: "#B9B9FF",
+        color: "#38BDF8",
         toolTipContent: "時間：{label}<br />{name}：{y} A",
         showInLegend: true,
         visible: lineVisibility["系統電流"],
@@ -65,7 +65,7 @@ export const CurrentOptions = (
       {
         type: "spline",
         name: "允許最大充電電流",
-        color: "#FFB5B5",
+        color: "#4C1D95",
         toolTipContent: "{name}：{y} A",
         showInLegend: true,
         visible: lineVisibility["允許最大充電電流"],
@@ -74,7 +74,7 @@ export const CurrentOptions = (
       {
         type: "spline",
         name: "允許放電最大電流",
-        color: "#D94600",
+        color: "#991B1B",
         toolTipContent: "{name}：{y} A",
         showInLegend: true,
         visible: lineVisibility["允許放電最大電流"],
@@ -83,7 +83,7 @@ export const CurrentOptions = (
       {
         type: "spline",
         name: "MBMU SOC",
-        color: "#429200",
+        color: "#065F46",
         toolTipContent: "{name}：{y} %",
         axisYType: "secondary",
         showInLegend: true,
