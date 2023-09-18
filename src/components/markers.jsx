@@ -39,7 +39,7 @@ export const markers = [
       image: {
         x: "260",
         y: "270",
-        urL: "/image/花蓮華城大東455.jpg",
+        urL: "/image/花蓮華城大東455.png",
       },
     },
   },
@@ -83,7 +83,7 @@ export const markers = [
       image: {
         x: "260",
         y: "235",
-        urL: "/image/花蓮華城大東244.jpg",
+        urL: "/image/花蓮華城大東244.png",
       },
     },
   },
@@ -127,7 +127,7 @@ export const markers = [
       image: {
         x: "-20",
         y: "125",
-        urL: "/image/觀音華城三廠.jpg",
+        urL: "/image/觀音華城三廠.png",
       },
     },
   },
@@ -171,7 +171,51 @@ export const markers = [
       image: {
         x: "75",
         y: "165",
-        urL: "/image/彰濱.jpg",
+        urL: "/image/彰濱.png",
+      },
+    },
+  },
+  {
+    id: "4",
+    route: "/pn-list/pn-summary-HDX0100",
+    name: "泓德澎湖",
+    projectName: "HDX0100",
+    markerOffset: { x: -50, y: -5 },
+    markerColor: "#f00",
+    textOutline: {
+      x: "195",
+      y: "316",
+      width: "70",
+    },
+    coordinates: [119.6, 23.55],
+    cardCoordinates: {
+      outterBackground: {
+        x: "0",
+        y: "160",
+      },
+      innerBackground: {
+        x: "1.5",
+        y: "161.5",
+      },
+      clipPath: {
+        attribute:
+          "polygon(0% 0%, 100% 0%, 100% 85%, 75% 85%, 75% 100%, 50% 85%, 0 85%)",
+      },
+      text: {
+        x: "50",
+        y: "178",
+      },
+
+      line: {
+        xStart: "10",
+        yStart: "185",
+        xEnd: "140",
+        yEnd: "185",
+      },
+      image: {
+        x: "10",
+        y: "190",
+        urL: "/image/柳營泓德匯鉅.png",
       },
     },
   },

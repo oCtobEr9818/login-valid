@@ -4,7 +4,7 @@ export const SocOptions = (socDatas) => {
     zoomEnabled: true, // 縮放
     exportEnabled: true, // 存成圖檔
     title: {
-      text: "SOC 圖表",
+      text: "SOC Distribution",
     },
     axisY: {
       title: "SOC (%)",
@@ -27,7 +27,7 @@ export const SocOptions = (socDatas) => {
         type: "column",
         indexLabel: "{y} %",
         indexLabelPlacement: "outside",
-        toolTipContent: "時間：{time}<br />{label}：{y} %",
+        toolTipContent: "Time：{time}<br />{label}：{y} %",
         dataPoints: socDatas,
       },
     ],

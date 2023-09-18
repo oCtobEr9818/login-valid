@@ -9,6 +9,7 @@ import PnSummaryFEX0102 from "../pages/pnSummary/PN_summary_FEX0102";
 import PnSummaryTCN01A1 from "../pages/pnSummary/PN_summary_TCN01A1";
 import PnSummaryTCN01A2 from "../pages/pnSummary/PN_summary_TCN01A2";
 import PnSummaryTCN02A1 from "../pages/pnSummary/PN_summary_TCN02A1";
+import PnSummaryHDX0100 from "../pages/pnSummary/PN_summary_HDX0100";
 import PnHistory from "../pages/PN_history";
 import EventViewer from "../pages/EventViewer";
 import Login from "../pages/Login";
@@ -53,6 +54,10 @@ const AnimatedRoutes = () => {
               <Route
                 path="/pn-list/pn-summary-TCN02A1"
                 element={<PnSummaryTCN02A1 />}
+              />
+              <Route
+                path="/pn-list/pn-summary-HDX0100"
+                element={<PnSummaryHDX0100 />}
               />
 
               <Route path="/pn-history" element={<PnHistory />} />

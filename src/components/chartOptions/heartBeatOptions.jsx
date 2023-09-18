@@ -2,7 +2,7 @@ import { useState } from "react";
 
 export const HeartBeatOptions = (heartBeat) => {
   const [lineVisibility, setLineVisibility] = useState({
-    "MBMU 心跳": true,
+    Heartbeat: true,
   });
 
   // 顯示or隱藏圖表線段
@@ -19,7 +19,7 @@ export const HeartBeatOptions = (heartBeat) => {
     zoomEnabled: true, // 縮放
     exportEnabled: true, // 存成圖檔
     title: {
-      text: "MBMU 心跳",
+      text: "MBMU Heartbeat",
     },
     axisY: {
       title: "heart beat",
@@ -40,10 +40,10 @@ export const HeartBeatOptions = (heartBeat) => {
     data: [
       {
         type: "line",
-        toolTipContent: "時間：{label}<br />{name}: {y}",
-        name: "MBMU 心跳",
+        toolTipContent: "Time：{label}<br />{name}: {y}",
+        name: "Heartbeat",
         showInLegend: true,
-        visible: lineVisibility["MBMU 心跳"],
+        visible: lineVisibility["Heartbeat"],
         dataPoints: heartBeat,
       },
     ],

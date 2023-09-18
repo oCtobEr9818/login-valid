@@ -7,9 +7,9 @@ export const CurrentOptions = (
   soc
 ) => {
   const [lineVisibility, setLineVisibility] = useState({
-    系統電流: true,
-    允許最大充電電流: true,
-    允許放電最大電流: true,
+    "System current": true,
+    "Allow max": true,
+    "Allow min": true,
     "MBMU SOC": true,
   });
 
@@ -27,11 +27,11 @@ export const CurrentOptions = (
     zoomEnabled: true,
     exportEnabled: true,
     title: {
-      text: "電流折線圖",
+      text: "System Current",
       fontSize: 30,
     },
     axisY: {
-      title: "電流 (A)",
+      title: "Current (A)",
       suffix: "(A)",
     },
     axisY2: {
@@ -55,29 +55,29 @@ export const CurrentOptions = (
     data: [
       {
         type: "spline",
-        name: "系統電流",
+        name: "System current",
         color: "#38BDF8",
-        toolTipContent: "時間：{label}<br />{name}：{y} A",
+        toolTipContent: "Time：{label}<br />{name}：{y} A",
         showInLegend: true,
-        visible: lineVisibility["系統電流"],
+        visible: lineVisibility["System current"],
         dataPoints: sysCurrent,
       },
       {
         type: "spline",
-        name: "允許最大充電電流",
+        name: "Allow max",
         color: "#4C1D95",
         toolTipContent: "{name}：{y} A",
         showInLegend: true,
-        visible: lineVisibility["允許最大充電電流"],
+        visible: lineVisibility["Allow max"],
         dataPoints: maxChargeCurrentAllow,
       },
       {
         type: "spline",
-        name: "允許放電最大電流",
+        name: "Allow min",
         color: "#991B1B",
         toolTipContent: "{name}：{y} A",
         showInLegend: true,
-        visible: lineVisibility["允許放電最大電流"],
+        visible: lineVisibility["Allow min"],
         dataPoints: maxDisChargeCurrentAllow,
       },
       {

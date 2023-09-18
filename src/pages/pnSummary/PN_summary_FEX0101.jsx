@@ -7,7 +7,7 @@ const PnSummaryFEX0101 = () => {
         pnName="FEX0101"
         pnID="2"
         snID="2"
-        imgUrl="花蓮華城大東244.jpg"
+        imgUrl="花蓮華城大東244.png"
         imgAlt="花蓮華城大東244照片"
       />
     </>

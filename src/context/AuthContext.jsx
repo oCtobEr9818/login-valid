@@ -69,6 +69,7 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem("userLoggedIn", "true");
     } catch (err) {
       if (err.response && err.response.status === 422) {
+        ReactSwal.close();
         setErrors(err.response.data.errors);
       }
     }
@@ -89,6 +90,7 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem("userLoggedIn", "true");
     } catch (err) {
       if (err.response.status === 422) {
+        ReactSwal.close();
         setErrors(err.response.data.errors);
       }
     }
