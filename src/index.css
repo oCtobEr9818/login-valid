@@ -13,11 +13,11 @@
 }
 
 .pnList-table-th {
-  @apply w-auto h-14 border-gray-400 text-left font-bold text-lg
+  @apply h-14 border-gray-400 text-left font-bold text-lg
 }
 
 .pnList-table-td {
-  @apply w-auto h-14 border-gray-400 text-left
+  @apply h-14 pr-4 border-gray-400 text-left
 }
 
 .active {

@@ -22,7 +22,7 @@ const Pagination = ({
     variant: activePage === index ? "outlined" : "text",
     onClick: () => onPageChange(index), // 點擊時切換到對應頁面
     className: `rounded-full flex justify-center items-center ${
-      activePage === index ? "bg-slate-800 text-white" : ""
+      activePage === index ? "bg-slate-800 text-mainText" : "text-mainText"
     }`,
   });
 

@@ -57,10 +57,11 @@ export const AuthProvider = ({ children }) => {
   const login = async ({ ...data }) => {
     await csrf();
     setErrors([]);
-    loadingSwal("登入");
 
     try {
+      loadingSwal("登入");
       await axios.post("/login", data);
+
       await getUser();
 
       commonSwal("登入");
@@ -69,7 +70,6 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem("userLoggedIn", "true");
     } catch (err) {
       if (err.response && err.response.status === 422) {
-        ReactSwal.close();
         setErrors(err.response.data.errors);
       }
     }
@@ -78,10 +78,11 @@ export const AuthProvider = ({ children }) => {
   const register = async ({ ...data }) => {
     await csrf();
     setErrors([]);
-    loadingSwal("註冊");
 
     try {
+      loadingSwal("註冊");
       await axios.post("/register", data);
+
       await getUser();
 
       commonSwal("註冊");
@@ -90,7 +91,6 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem("userLoggedIn", "true");
     } catch (err) {
       if (err.response.status === 422) {
-        ReactSwal.close();
         setErrors(err.response.data.errors);
       }
     }
