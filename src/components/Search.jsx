@@ -42,7 +42,7 @@ const Search = ({
           id="dropdown-button"
           ref={dropdownRef}
           onClick={toggleDropdown}
-          className="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-l-lg dark:hover:bg-gray-600 dark:hover:text-white focus:outline-none dark:focus:bg-gray-600 dark:focus:text-white"
+          className="flex-shrink-0 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-l-lg dark:hover:bg-gray-600 dark:hover:text-white focus:outline-none dark:focus:bg-gray-600 dark:focus:text-white"
           type="button"
         >
           {selectedOption || initialOption}
@@ -79,7 +79,7 @@ const Search = ({
           <input
             type="search"
             id="search-dropdown"
-            className="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 focus:outline-none"
+            className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 focus:outline-none"
             placeholder={`${
               selectedOption === initialOption
                 ? initialPlaceholder

@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }) => {
 
   // 按下登入、登出、註冊的等待畫面
   const loadingSwal = async (text) => {
-    await ReactSwal.fire({
+    return await ReactSwal.fire({
       title: <i>{text}中</i>,
       didOpen: () => {
         ReactSwal.showLoading();
@@ -44,7 +44,7 @@ export const AuthProvider = ({ children }) => {
   };
   // 按下登入、登出、註冊後的成功訊息
   const commonSwal = async (text) => {
-    return ReactSwal.fire({
+    return await ReactSwal.fire({
       icon: "success",
       title: `${text}成功！`,
       showConfirmButton: false,

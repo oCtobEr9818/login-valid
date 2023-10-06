@@ -15,15 +15,20 @@ const EventViewer = () => {
   const searchOptions = ["所有類別", "類型", "訊息", "時間"];
 
   useEffect(() => {
-    getPnListDatas();
+    getEventDatas();
+
+    const interval = setInterval(() => {
+      getEventDatas();
+    }, 5000);
+
+    return () => clearInterval(interval);
   }, []);
 
   // fetch PN 資料
-  const getPnListDatas = async () => {
+  const getEventDatas = async () => {
     try {
       const response = await axiosPnListApi.get("/alerts");
       const datas = response.data.data;
-      console.log(datas);
 
       setEventViewer(datas);
       setFilterEventViewerData(datas);
@@ -48,7 +53,7 @@ const EventViewer = () => {
       .map((data) => (
         <tr key={data.id}>
           <td className="pnList-table-td md:w-1/8">{data.alert_type}</td>
-          <td className="pnList-table-td md:w-5/8">{data.message}</td>
+          <td className="pnList-table-td md:w-3/5">{data.message}</td>
           <td className="pnList-table-td md:w-1/4">
             {data.created_at.slice(0, 10) + " " + data.created_at.slice(11, 19)}
           </td>
@@ -124,7 +129,7 @@ const EventViewer = () => {
             <thead>
               <tr>
                 <th className="pnList-table-th md:w-1/8">類型</th>
-                <th className="pnList-table-th md:w-5/8">訊息</th>
+                <th className="pnList-table-th md:w-3/5">訊息</th>
                 <th className="pnList-table-th md:w-1/4">時間</th>
               </tr>
             </thead>
