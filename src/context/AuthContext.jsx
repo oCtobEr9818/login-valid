@@ -31,8 +31,8 @@ export const AuthProvider = ({ children }) => {
   };
 
   // 按下登入、登出、註冊的等待畫面
-  const loadingSwal = async (text) => {
-    return await ReactSwal.fire({
+  const loadingSwal = (text) => {
+    return ReactSwal.fire({
       title: <i>{text}中</i>,
       didOpen: () => {
         ReactSwal.showLoading();
@@ -43,8 +43,8 @@ export const AuthProvider = ({ children }) => {
     });
   };
   // 按下登入、登出、註冊後的成功訊息
-  const commonSwal = async (text) => {
-    return await ReactSwal.fire({
+  const sucessSwal = (text) => {
+    return ReactSwal.fire({
       icon: "success",
       title: `${text}成功！`,
       showConfirmButton: false,
@@ -54,53 +54,66 @@ export const AuthProvider = ({ children }) => {
     });
   };
 
+  // 登入
   const login = async ({ ...data }) => {
     await csrf();
     setErrors([]);
 
     try {
       loadingSwal("登入");
-      await axios.post("/login", data);
+      const response = await axios.post("/login", data);
 
-      await getUser();
+      if (response.status === 204 || response.status === 200) {
+        await getUser();
 
-      commonSwal("登入");
-      navigate("/");
+        navigate("/");
+        await sucessSwal("登入");
 
-      localStorage.setItem("userLoggedIn", "true");
+        localStorage.setItem("userLoggedIn", "true");
+      } else {
+        console.error(response.status);
+      }
     } catch (err) {
       if (err.response && err.response.status === 422) {
         setErrors(err.response.data.errors);
       }
+    } finally {
+      Swal.close();
     }
   };
 
+  // 註冊
   const register = async ({ ...data }) => {
     await csrf();
     setErrors([]);
 
     try {
       loadingSwal("註冊");
-      await axios.post("/register", data);
+      const response = await axios.post("/register", data);
 
-      await getUser();
+      if (response.status === 204 || response.status === 200) {
+        await getUser();
 
-      commonSwal("註冊");
-      navigate("/");
+        navigate("/");
+        await sucessSwal("註冊");
 
-      localStorage.setItem("userLoggedIn", "true");
+        localStorage.setItem("userLoggedIn", "true");
+      }
     } catch (err) {
       if (err.response.status === 422) {
         setErrors(err.response.data.errors);
       }
+    } finally {
+      Swal.close();
     }
   };
 
+  // 登出
   const logout = () => {
     try {
       axios.post("/logout").then(() => {
         setUser(null);
-        commonSwal("登出");
+        sucessSwal("登出");
 
         localStorage.removeItem("userLoggedIn");
       });
