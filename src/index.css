@@ -23,3 +23,8 @@
 .active {
   @apply bg-[#fcfcfc] text-black
 }
+
+/* 隱藏通知欄的滾動條，並保持功能不變 */
+.hide-scrollbar::-webkit-scrollbar {
+  width: 0;
+}
