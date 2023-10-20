@@ -30,7 +30,7 @@ const Nav = () => {
 
     const interval = setInterval(() => {
       getEventDatas();
-    }, 10000);
+    }, 3000);
 
     return () => clearInterval(interval);
   }, []);
@@ -72,10 +72,11 @@ const Nav = () => {
                 </span>
               )}
 
+              {/* 通知欄 */}
               {isNoticeOpen && (
                 <ul
                   id="notice"
-                  className="w-60 border-1 border-gray-700 rounded-t-lg shadow-lg text-sm text-center absolute -right-6 top-14 overflow-y-scroll hide-scrollbar"
+                  className="w-60 max-h-[50vh] border-1 border-gray-700 rounded-t-lg shadow-md shadow-slate-800 text-sm text-center absolute -right-6 top-14 overflow-y-scroll hide-scrollbar"
                   aria-labelledby="noticeDefaultButton"
                 >
                   <li className="bg-blue-600 text-slate-100 rounded-t-lg">
@@ -86,7 +87,7 @@ const Nav = () => {
                   {notificationCounts > 0 ? (
                     notificationDatas.map((data, index) => (
                       <li>
-                        <Link to="/enent-viewer">
+                        <Link to="/event-viewer">
                           <div
                             key={index}
                             className="w-full px-4 py-2 bg-white dark:hover:bg-blue-200 cursor-pointer transition-all duration-200 flex items-center"
@@ -109,10 +110,10 @@ const Nav = () => {
                       </span>
                     </li>
                   )}
-                  <li>
+                  <li className="sticky bottom-0">
                     <Link
                       to="/event-viewer"
-                      className="w-full inline-block px-2 py-3 mx-auto border-t-1 bg-white dark:hover:bg-blue-200  cursor-pointer transition-all duration-200"
+                      className="w-full inline-block px-2 py-3 mx-auto bg-blue-200 dark:hover:bg-blue-500 dark:hover:text-white  cursor-pointer transition-all duration-200"
                     >
                       顯示所有通知
                     </Link>
@@ -141,7 +142,7 @@ const Nav = () => {
                     ></i>
                   </span>
 
-                  {/* 當isOpen = true，會顯示下拉式選單 */}
+                  {/* 登出按鈕 */}
                   {isOpen && (
                     <ul
                       id="dropdown"
