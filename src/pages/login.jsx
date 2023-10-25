@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 
 import useAuthContext from "../context/AuthContext";
@@ -10,10 +10,21 @@ const Login = () => {
   const [isChecked, setIsChecked] = useState(false);
   const { login, errors } = useAuthContext();
 
+  const emailInputRef = useRef(null);
+  const passwordInputRef = useRef(null);
+
   useEffect(() => {
     if (localStorage.rememberEmail && localStorage.email !== "") {
       setIsChecked(true);
       setEmail(localStorage.email);
+
+      if (passwordInputRef.current) {
+        passwordInputRef.current.focus();
+      }
+    } else {
+      if (emailInputRef.current) {
+        emailInputRef.current.focus();
+      }
     }
   }, []);
 
@@ -52,6 +63,7 @@ const Login = () => {
                     label="電子信箱"
                     errors={errors.email}
                     errorsMessage={errors.email?.[0]}
+                    ref={emailInputRef}
                   />
 
                   <Input
@@ -62,6 +74,7 @@ const Login = () => {
                     label="密碼"
                     errors={errors.password}
                     errorsMessage={errors.password?.[0]}
+                    ref={passwordInputRef}
                   />
 
                   <div className="pl-2 mb-6 text-left">

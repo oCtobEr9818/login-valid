@@ -7,7 +7,7 @@ import { motionVariants } from "./motionSettings";
 export default function App() {
   return (
     <motion.div
-      className="bg-body min-h-screen w-full m-0 p-0"
+      className="bg-body min-h-screen w-full m-0 p-0 overflow-hidden"
       variants={motionVariants}
       initial="initial"
       animate="enter"

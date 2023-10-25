@@ -71,8 +71,6 @@ const PnList = () => {
 
   // 搜尋功能過濾資料
   const handleSearch = (query) => {
-    setSearchQuery(query);
-
     let filteredData;
     switch (selectedOption) {
       case "PN":
