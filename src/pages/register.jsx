@@ -5,15 +5,15 @@ import useAuthContext from "../context/AuthContext";
 import Input from "../components/Input";
 
 const Register = () => {
-  const [userName, setUserName] = useState("");
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const [password_confirmation, setPassword_confirmation] = useState("");
   const { errors, register } = useAuthContext();
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    register({ userName, email, password, passwordConfirmation });
+    register({ name, email, password, password_confirmation });
   };
 
   return (
@@ -42,8 +42,8 @@ const Register = () => {
                   <Input
                     id="userName"
                     type="text"
-                    value={userName}
-                    onChange={(e) => setUserName(e.target.value)}
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                     label="使用者名稱"
                     errors={errors.name}
                     errorsMessage={errors.name?.[0]}
@@ -72,8 +72,8 @@ const Register = () => {
                   <Input
                     id="passwordConfirmation"
                     type="password"
-                    value={passwordConfirmation}
-                    onChange={(e) => setPasswordConfirmation(e.target.value)}
+                    value={password_confirmation}
+                    onChange={(e) => setPassword_confirmation(e.target.value)}
                     label="再次確認密碼"
                     errors={errors.password}
                     errorsMessage={errors.password?.[0]}

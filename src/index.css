@@ -20,6 +20,14 @@
   @apply h-14 pr-3 text-left
 }
 
+.daily-table-th {
+  @apply px-6 py-3
+}
+
+.daily-table-td {
+  @apply px-6 py-4 font-medium whitespace-nowrap text-white
+}
+
 .active {
   @apply bg-[#fcfcfc] text-black
 }

@@ -7,8 +7,9 @@ import { HeartBeatOptions } from "../../components/chartOptions/heartBeatOptions
 import { SocOptions } from "../../components/chartOptions/socOptions";
 import { VoltageOptions } from "../../components/chartOptions/voltageOptions";
 import { CurrentOptions } from "../../components/chartOptions/currentOptions";
+import { SbmuTable } from "../../components/chartOptions/sbmuTable";
 
-const PnSummaryLayout = ({ pnName, pnID, snID, imgUrl, imgAlt }) => {
+const PnSummaryLayout = ({ pnName, pnID, snID, imgUrl, imgAlt, dailyPnId }) => {
   const [pnDatas, setDatas] = useState([]);
 
   const [soc, setSoc] = useState([]);
@@ -23,6 +24,7 @@ const PnSummaryLayout = ({ pnName, pnID, snID, imgUrl, imgAlt }) => {
   const [maxChargeCurrentAllow, setMaxChargeCurrentAllow] = useState([]);
   const [maxDisChargeCurrentAllow, setMaxDisChargeCurrentAllow] = useState([]);
   const [updatedTime, setUpdatedTime] = useState("");
+  const [sbmuData, setSbmuData] = useState([]);
 
   useEffect(() => {
     // 進入頁面先獲取第一筆資料
@@ -53,7 +55,10 @@ const PnSummaryLayout = ({ pnName, pnID, snID, imgUrl, imgAlt }) => {
       if (deviceResponse.status === 200) {
         const deviceDatas = deviceResponse.data.data;
         const MbmuJSON = JSON.parse(deviceDatas[0].data);
+        const SbmuDatas = deviceDatas.slice(1);
         const chartLabel = deviceDatas[0].created_at?.slice(11); // 圖表時間
+
+        setSbmuData(SbmuDatas);
 
         // SOC 資料集
         const updatedSocDatas = deviceDatas.map((data) => {
@@ -271,6 +276,9 @@ const PnSummaryLayout = ({ pnName, pnID, snID, imgUrl, imgAlt }) => {
             )}
           />
         </div>
+
+        {/* 表格 */}
+        <SbmuTable sbmuData={sbmuData} />
       </div>
     </div>
   );

@@ -89,7 +89,10 @@ export const AuthProvider = ({ children }) => {
 
     try {
       loadingSwal("註冊");
-      const response = await axios.post("/register", data);
+      const headers = {
+        "Content-Type": "application/json",
+      };
+      const response = await axios.post("/register", data, { headers });
 
       if (response.status === 204 || response.status === 200) {
         await getUser();

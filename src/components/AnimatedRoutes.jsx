@@ -10,7 +10,13 @@ import PnSummaryTCN01A1 from "../pages/pnSummary/PN_summary_TCN01A1";
 import PnSummaryTCN01A2 from "../pages/pnSummary/PN_summary_TCN01A2";
 import PnSummaryTCN02A1 from "../pages/pnSummary/PN_summary_TCN02A1";
 import PnSummaryHDX0100 from "../pages/pnSummary/PN_summary_HDX0100";
-import PnHistory from "../pages/PN_history";
+import PnHistoryFEX0100 from "../pages/pnHistory/PN_history_FEX0100";
+import PnHistoryFEX0101 from "../pages/pnHistory/PN_history_FEX0101";
+import PnHistoryFEX0102 from "../pages/pnHistory/PN_history_FEX0102";
+import PnHistoryTCN01A1 from "../pages/pnHistory/PN_history_TCN01A1";
+import PnHistoryTCN01A2 from "../pages/pnHistory/PN_history_TCN01A2";
+import PnHistoryTCN02A1 from "../pages/pnHistory/PN_history_TCN02A1";
+import PnHistoryHDX0100 from "../pages/pnHistory/PN_history_HDX0100";
 import EventViewer from "../pages/EventViewer";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
@@ -31,6 +37,7 @@ const AnimatedRoutes = () => {
             <Route element={<AuthLayout />}>
               <Route path="/" element={<Home />} />
               <Route path="/pn-list" element={<PnList />} />
+              {/* 詳細資料 */}
               <Route
                 path="/pn-list/pn-summary-FEX0100"
                 element={<PnSummaryFEX0100 />}
@@ -60,7 +67,35 @@ const AnimatedRoutes = () => {
                 element={<PnSummaryHDX0100 />}
               />
 
-              <Route path="/pn-history" element={<PnHistory />} />
+              {/* 歷史資料 */}
+              <Route
+                path="/pn-history-FEX0100"
+                element={<PnHistoryFEX0100 />}
+              />
+              <Route
+                path="/pn-history-FEX0101"
+                element={<PnHistoryFEX0101 />}
+              />
+              <Route
+                path="/pn-history-FEX0102"
+                element={<PnHistoryFEX0102 />}
+              />
+              <Route
+                path="/pn-history-TCN01A1"
+                element={<PnHistoryTCN01A1 />}
+              />
+              <Route
+                path="/pn-history-TCN01A2"
+                element={<PnHistoryTCN01A2 />}
+              />
+              <Route
+                path="/pn-history-TCN02A1"
+                element={<PnHistoryTCN02A1 />}
+              />
+              <Route
+                path="/pn-history-HDX0100"
+                element={<PnHistoryHDX0100 />}
+              />
               <Route path="/event-viewer" element={<EventViewer />} />
             </Route>
 

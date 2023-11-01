@@ -43,7 +43,6 @@ const MapChart = () => {
           center: taiwanCenter,
           scale: 5000,
         }}
-        className="w-full m-auto z-10"
       >
         <ZoomableGroup center={taiwanCenter} zoom={1}>
           <Geographies geography="/gadm41_TWN.json">
