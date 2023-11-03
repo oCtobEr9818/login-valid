@@ -59,7 +59,7 @@ const PnList = () => {
               詳細資訊
             </Link>
             <Link
-              to={`/pn-history-${data.pn_name}`}
+              to={`/pn-list/pn-history-${data.pn_name}`}
               className="lg:p-2.5 p-1 ml-3 -mr-3 rounded-md bg-blue-500 hover:bg-blue-600 text-slate-200 text-sm lg:text-base"
             >
               歷史資料

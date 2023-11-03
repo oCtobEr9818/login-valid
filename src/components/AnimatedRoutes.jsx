@@ -69,31 +69,31 @@ const AnimatedRoutes = () => {
 
               {/* 歷史資料 */}
               <Route
-                path="/pn-history-FEX0100"
+                path="/pn-list/pn-history-FEX0100"
                 element={<PnHistoryFEX0100 />}
               />
               <Route
-                path="/pn-history-FEX0101"
+                path="/pn-list/pn-history-FEX0101"
                 element={<PnHistoryFEX0101 />}
               />
               <Route
-                path="/pn-history-FEX0102"
+                path="/pn-list/pn-history-FEX0102"
                 element={<PnHistoryFEX0102 />}
               />
               <Route
-                path="/pn-history-TCN01A1"
+                path="/pn-list/pn-history-TCN01A1"
                 element={<PnHistoryTCN01A1 />}
               />
               <Route
-                path="/pn-history-TCN01A2"
+                path="/pn-list/pn-history-TCN01A2"
                 element={<PnHistoryTCN01A2 />}
               />
               <Route
-                path="/pn-history-TCN02A1"
+                path="/pn-list/pn-history-TCN02A1"
                 element={<PnHistoryTCN02A1 />}
               />
               <Route
-                path="/pn-history-HDX0100"
+                path="/pn-list/pn-history-HDX0100"
                 element={<PnHistoryHDX0100 />}
               />
               <Route path="/event-viewer" element={<EventViewer />} />

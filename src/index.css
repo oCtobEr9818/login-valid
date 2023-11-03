@@ -12,6 +12,7 @@
   right: 4.3rem;
 }
 
+/* pn list 表格 */
 .pnList-table-th {
   @apply h-14 pr-3 text-left font-bold text-lg
 }
@@ -20,11 +21,12 @@
   @apply h-14 pr-3 text-left
 }
 
-.daily-table-th {
+/* snmu 表格 */
+.sbmu-table-th {
   @apply px-6 py-3
 }
 
-.daily-table-td {
+.sbmu-table-td {
   @apply px-6 py-4 font-medium whitespace-nowrap text-white
 }
 

@@ -2,7 +2,7 @@ const PnHistoryHDX0100 = () => {
   return (
     <div className="w-full h-full py-6 px-12">
       <div className="h-auto pl-4 py-4 bg-slate-200 rounded-md text-sm select-none">
-        <label className="opacity-60">首頁{" > "}PN_history_HDX0100</label>
+        <label className="opacity-60">首頁{" > "}HDX0100歷史資料</label>
       </div>
 
       <div className=" h-auto w-full mt-4">

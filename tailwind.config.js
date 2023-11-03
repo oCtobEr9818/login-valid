@@ -7,7 +7,6 @@ module.exports = {
         mainText: "#fcfcfc",
       },
       backgroundColor: {
-        sideBar: "#E5F8C6",
         body: "#3a3e44",
       },
       borderColor: {

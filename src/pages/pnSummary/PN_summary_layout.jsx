@@ -9,7 +9,7 @@ import { VoltageOptions } from "../../components/chartOptions/voltageOptions";
 import { CurrentOptions } from "../../components/chartOptions/currentOptions";
 import { SbmuTable } from "../../components/chartOptions/sbmuTable";
 
-const PnSummaryLayout = ({ pnName, pnID, snID, imgUrl, imgAlt, dailyPnId }) => {
+const PnSummaryLayout = ({ pnName, pnID, snID, imgUrl, imgAlt }) => {
   const [pnDatas, setDatas] = useState([]);
 
   const [soc, setSoc] = useState([]);
