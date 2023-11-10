@@ -35,7 +35,7 @@ const SideBar = () => {
 
   return (
     <>
-      <div className="sideBar w-24 md:w-64 min-h-screen bg-[#212327] shadow-sideBar z-10">
+      <div className="sideBar w-24 md:w-64 min-h-screen bg-outline shadow-sideBar z-10">
         <img
           src={`/image/${isSmallScreen ? "logo2" : "logo-dark"}.png`}
           alt="明曜科技Logo"

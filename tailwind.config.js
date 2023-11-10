@@ -8,6 +8,7 @@ module.exports = {
       },
       backgroundColor: {
         body: "#3a3e44",
+        outline: "#212327",
       },
       borderColor: {
         options: "#bab",

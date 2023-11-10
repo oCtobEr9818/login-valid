@@ -45,28 +45,31 @@ const PnList = () => {
           data.location.includes(searchQuery)
       )
       .slice(startIndex, endIndex)
-      .map((data) => (
-        <tr key={data.id} className="h-16">
-          <td className="pnList-table-td">{data.pn_name}</td>
-          <td className="pnList-table-td">{data.nickname}</td>
-          <td className="pnList-table-td">{data.location}</td>
-          <td className="pnList-table-td">{data.updated_at}</td>
-          <td className="pnList-table-td flex items-center justify-start">
-            <Link
-              to={`/pn-list/pn-summary-${data.pn_name}`}
-              className="lg:p-2.5 p-1 rounded-md bg-blue-500 hover:bg-blue-600 text-slate-200 text-sm lg:text-base"
-            >
-              詳細資訊
-            </Link>
-            <Link
-              to={`/pn-list/pn-history-${data.pn_name}`}
-              className="lg:p-2.5 p-1 ml-3 -mr-3 rounded-md bg-blue-500 hover:bg-blue-600 text-slate-200 text-sm lg:text-base"
-            >
-              歷史資料
-            </Link>
-          </td>
-        </tr>
-      ));
+      .map((data) => {
+        const processDate = data?.updated_at?.slice(0, 19).replace("T", " ");
+        return (
+          <tr key={data.id} className="h-16">
+            <td className="pnList-table-td">{data.pn_name}</td>
+            <td className="pnList-table-td">{data.nickname}</td>
+            <td className="pnList-table-td">{data.location}</td>
+            <td className="pnList-table-td">{processDate}</td>
+            <td className="pnList-table-td flex items-center justify-start">
+              <Link
+                to={`/pn-list/pn-summary-${data.pn_name}`}
+                className="lg:p-2.5 p-1 rounded-md bg-blue-500 hover:bg-blue-600 text-slate-200 text-sm lg:text-base"
+              >
+                詳細資訊
+              </Link>
+              <Link
+                to={`/pn-list/pn-history-${data.pn_name}`}
+                className="lg:p-2.5 p-1 ml-3 -mr-3 rounded-md bg-blue-500 hover:bg-blue-600 text-slate-200 text-sm lg:text-base"
+              >
+                歷史資料
+              </Link>
+            </td>
+          </tr>
+        );
+      });
   };
 
   // 搜尋功能過濾資料

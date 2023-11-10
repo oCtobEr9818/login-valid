@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState, useCallback } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 import axiosPnListApi from "../../api/axiosPnListApi";
 import CanvasJSReact from "../../assets/canvasjs-chart-3.7.19/canvasjs.react";
@@ -10,6 +12,9 @@ import { SocHistoryOptions } from "../../components/chartOptions/socHistoryOptio
 import { VoltageOptions } from "../../components/chartOptions/voltageOptions";
 import { CurrentOptions } from "../../components/chartOptions/currentOptions";
 import { formatDate } from "../../components/formatDate";
+
+// 比較漂亮的alert
+const ReactSwal = withReactContent(Swal);
 
 const PnHistoryLayout = ({ pnName, pnID, snID, deviceID, imgUrl, imgAlt }) => {
   const [pnDatas, setDatas] = useState([]);
@@ -21,18 +26,14 @@ const PnHistoryLayout = ({ pnName, pnID, snID, deviceID, imgUrl, imgAlt }) => {
   const [maxChargeCurrentAllow, setMaxChargeCurrentAllow] = useState([]);
   const [maxDisChargeCurrentAllow, setMaxDisChargeCurrentAllow] = useState([]);
   const [startDate, setStartDate] = useState(new Date());
-  // const [totalDataCounts, setTotalDataCounts] = useState(30000);
 
-  useEffect(() => {
+  // 讀取資料
+  const handleReadData = useCallback(() => {
+    loadingSwal();
     getPnHistoryDatas();
   }, [startDate]);
 
-  useEffect(() => {
-    getPnHistoryDatas();
-  }, []);
-
-  const handleStartDateTime = (date) => setStartDate(date);
-
+  // axios API
   const getPnHistoryDatas = async () => {
     try {
       const pnResponse = await axiosPnListApi.get("/pn");
@@ -50,9 +51,6 @@ const PnHistoryLayout = ({ pnName, pnID, snID, deviceID, imgUrl, imgAlt }) => {
       const hbmuDailyHistoryData = await axiosPnListApi.get(historyAPI);
 
       const hbmuDailyHistoryJSON = hbmuDailyHistoryData.data.data;
-      // const sumDataCounts = hbmuDailyHistoryData.data.total;
-      // setTotalDataCounts(sumDataCounts);
-      console.log(historyAPI);
 
       // BMS 心跳
       const filterdBMSHeartBeat = filterAndMapData(
@@ -92,8 +90,11 @@ const PnHistoryLayout = ({ pnName, pnID, snID, deviceID, imgUrl, imgAlt }) => {
         hbmuDailyHistoryJSON
       );
       setMaxDisChargeCurrentAllow(filterdMaxDischargeCurrentAllow);
+
+      closeSwal();
     } catch (err) {
       console.error(err);
+      closeSwal();
     }
   };
 
@@ -108,6 +109,31 @@ const PnHistoryLayout = ({ pnName, pnID, snID, deviceID, imgUrl, imgAlt }) => {
         };
       });
   };
+
+  function clearDatas() {
+    setHeartBeat([]);
+    setSocDatas([]);
+    setSysCurrent([]);
+    setAvgCellVoltage([]);
+    setMaxChargeCurrentAllow([]);
+    setMaxDisChargeCurrentAllow([]);
+    return;
+  }
+
+  const handleStartDateTime = (date) => setStartDate(date);
+
+  const loadingSwal = () => {
+    return ReactSwal.fire({
+      title: <i>資料量多，請耐心等待...</i>,
+      didOpen: () => {
+        ReactSwal.showLoading();
+      },
+      showConfirmButton: false,
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+    });
+  };
+  const closeSwal = () => ReactSwal.close();
 
   // CanvasJS chart
   const CanvasJSChart = CanvasJSReact.CanvasJSChart;
@@ -156,16 +182,32 @@ const PnHistoryLayout = ({ pnName, pnID, snID, deviceID, imgUrl, imgAlt }) => {
             </tbody>
           </table>
 
-          <div className="date w-full mt-4">
-            <span className="text-mainText text-lg font-bold">
-              選擇資料日期：
-            </span>
-            <DatePicker
-              selected={startDate}
-              onChange={handleStartDateTime}
-              dateFormat="yyyy-MM-dd"
-              className="outline-none w-[200px] px-2 py-1 rounded-lg border border-black dark:border-black"
-            />
+          <div className="date w-full mt-4 flex flex-col lg:flex-row lg:flex-nowrap lg:items-center items-start">
+            <div className="flex flex-nowrap items-center">
+              <span className="text-mainText text-lg font-bold">
+                選擇日期：
+              </span>
+              <DatePicker
+                selected={startDate}
+                onChange={handleStartDateTime}
+                dateFormat="yyyy-MM-dd"
+                className="outline-none w-[180px] px-2 py-1 rounded-lg border border-black dark:border-black"
+              />
+            </div>
+            <div className="my-4 flex lg:items-center justify-center">
+              <button
+                className="w-16 h-8 bg-slate-300 hover:bg-slate-500 hover:text-slate-100 rounded mx-2 transition-all duration-150 active:scale-90"
+                onClick={handleReadData}
+              >
+                讀取
+              </button>
+              <button
+                className="w-16 h-8 bg-slate-300 hover:bg-slate-500 hover:text-slate-100 rounded mx-2 transition-all duration-100 active:scale-90"
+                onClick={clearDatas}
+              >
+                清除
+              </button>
+            </div>
           </div>
         </div>
 

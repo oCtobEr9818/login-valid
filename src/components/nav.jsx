@@ -51,7 +51,7 @@ const Nav = () => {
 
   return (
     <>
-      <nav className="navBar w-full bg-[#212327] shadow-nav relative z-20">
+      <nav className="navBar w-full bg-outline shadow-nav relative z-20">
         <div className="container h-10 mx-auto my-3.5 ">
           <div className="w-full text-right">
             {/* 通知中心鈴鐺圖示 */}

@@ -9,9 +9,16 @@ import { VoltageOptions } from "../../components/chartOptions/voltageOptions";
 import { CurrentOptions } from "../../components/chartOptions/currentOptions";
 import { SbmuTable } from "../../components/chartOptions/sbmuTable";
 
-const PnSummaryLayout = ({ pnName, pnID, snID, imgUrl, imgAlt }) => {
-  const [pnDatas, setDatas] = useState([]);
-
+const PnSummaryLayout = ({
+  pnName,
+  pnNickName,
+  pnLoaction,
+  pnUpdatedAt,
+  pnID,
+  snID,
+  imgUrl,
+  imgAlt,
+}) => {
   const [soc, setSoc] = useState([]);
   const [socDatas, setSocDatas] = useState([]);
   const [heartBeat, setHeartBeat] = useState([]);
@@ -36,19 +43,10 @@ const PnSummaryLayout = ({ pnName, pnID, snID, imgUrl, imgAlt }) => {
     }, 5000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [pnID, snID]);
 
   const getPnListDatas = async () => {
     try {
-      const pnResponse = await axiosPnListApi.get("/pn");
-      const pnJSON = pnResponse.data.data;
-
-      for (const element of pnJSON) {
-        if (element.pn_name === pnName) {
-          setDatas(element);
-        }
-      }
-
       const deviceResponse = await axiosPnListApi.get(
         `/pn/${pnID}/sn/${snID}/device/all`
       );
@@ -172,28 +170,26 @@ const PnSummaryLayout = ({ pnName, pnID, snID, imgUrl, imgAlt }) => {
             <thead>
               <tr>
                 <th className="pnList-table-th pr-6">PN</th>
-                <td className="pnList-table-td border-l-1 pl-12">
-                  {pnDatas.pn_name}
-                </td>
+                <td className="pnList-table-td border-l-1 pl-12">{pnName}</td>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <th className="pnList-table-th pr-6">簡稱</th>
                 <td className="pnList-table-td border-l-1 pl-12">
-                  {pnDatas.nickname}
+                  {pnNickName}
                 </td>
               </tr>
               <tr>
                 <th className="pnList-table-th pr-6">地點</th>
                 <td className="pnList-table-td border-l-1 pl-12">
-                  {pnDatas.location}
+                  {pnLoaction}
                 </td>
               </tr>
               <tr>
                 <th className="pnList-table-th pr-6">上傳時間</th>
                 <td className="pnList-table-td border-l-1 pl-12">
-                  {pnDatas.updated_at}
+                  {pnUpdatedAt}
                 </td>
               </tr>
             </tbody>
