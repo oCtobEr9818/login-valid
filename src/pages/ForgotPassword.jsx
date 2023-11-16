@@ -52,7 +52,7 @@ const ForgotPassword = () => {
                 </div>
               )}
               <div className="mb-10 text-center md:mb-16">
-                輸入電子信箱，我們將發送新的密碼給您！
+                輸入電子信箱，我們將發送重設密碼的連結給您！
               </div>
               <form onSubmit={handleSubmit}>
                 <div className="mb-4 relative">

@@ -10,14 +10,14 @@ const ResetPassword = () => {
   const [errors, setErrors] = useState([]);
   const [status, setStatus] = useState(null);
   const [password, setPassword] = useState("");
-  const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const [password_confirmation, setPasswordConfirmation] = useState("");
   const [searchParams] = useSearchParams();
   const { token } = useParams();
 
   const { csrf } = useAuthContext();
 
   useEffect(() => {
-    setEmail(searchParams.length("email"));
+    setEmail(searchParams.get("email"));
   }, []);
 
   const handleSubmit = async (e) => {
@@ -31,7 +31,7 @@ const ResetPassword = () => {
         email,
         token,
         password,
-        passwordConfirmation,
+        password_confirmation,
       });
       setStatus(response.data.status);
     } catch (err) {
@@ -62,49 +62,47 @@ const ResetPassword = () => {
               "
             >
               {status && (
-                <div className="bg-green-700 m-2 p-2 rounded text-white">
-                  {status}
-                  <div className="m-2 p-2">
-                    去<Link to="/login">登入</Link>！
+                <>
+                  <div className="bg-green-800 m-2 p-2 rounded text-white">
+                    {status}
                   </div>
-                </div>
+                  <div className="m-2 p-2">
+                    去
+                    <Link
+                      to="/login"
+                      className="underline hover:text-red-500 font-bold"
+                    >
+                      登入
+                    </Link>
+                  </div>
+                </>
               )}
               <div className="mb-10 text-center md:mb-16">輸入新的密碼</div>
               <form onSubmit={handleSubmit}>
-                <div className="mb-4">
+                <div>
                   <Input
                     id="password"
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     label="密碼"
+                    errors={errors.password}
+                    errorsMessage={errors.password?.[0]}
                   />
-
-                  <div className="flex">
-                    {errors.password && (
-                      <span className="text-red-400 text-sm m-2 p-2">
-                        {errors.password[0]}
-                      </span>
-                    )}
-                  </div>
                 </div>
-                <div className="mb-4">
+
+                <div>
                   <Input
                     id="passwordConfirmation"
                     type="password"
-                    value={passwordConfirmation}
+                    value={password_confirmation}
                     onChange={(e) => setPasswordConfirmation(e.target.value)}
                     label="再次確認密碼"
+                    errors={errors.password}
+                    errorsMessage={errors.password?.[0]}
                   />
-
-                  <div className="flex">
-                    {errors.password && (
-                      <span className="text-red-400 text-sm m-2 p-2">
-                        {errors.password[0]}
-                      </span>
-                    )}
-                  </div>
                 </div>
+
                 <div className="mb-10">
                   <button
                     type="submit"
