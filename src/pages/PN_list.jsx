@@ -40,9 +40,9 @@ const PnList = () => {
     return filterPnListData
       .filter(
         (data) =>
-          data.pn_name.includes(searchQuery) ||
-          data.nickname.includes(searchQuery) ||
-          data.location.includes(searchQuery)
+          data.pn_name?.includes(searchQuery) ||
+          data.nickname?.includes(searchQuery) ||
+          data.location?.includes(searchQuery)
       )
       .slice(startIndex, endIndex)
       .map((data) => {
@@ -78,25 +78,25 @@ const PnList = () => {
     switch (selectedOption) {
       case "PN":
         filteredData = pnListData.filter((data) =>
-          data.pn_name.includes(query)
+          data.pn_name?.includes(query)
         );
         break;
       case "專案簡稱":
         filteredData = pnListData.filter((data) =>
-          data.nickname.includes(query)
+          data.nickname?.includes(query)
         );
         break;
       case "地點":
         filteredData = pnListData.filter((data) =>
-          data.location.includes(query)
+          data.location?.includes(query)
         );
         break;
       default:
         filteredData = pnListData.filter(
           (data) =>
-            data.pn_name.includes(query) ||
-            data.nickname.includes(query) ||
-            data.location.includes(query)
+            data.pn_name?.includes(query) ||
+            data.nickname?.includes(query) ||
+            data.location?.includes(query)
         );
         break;
     }

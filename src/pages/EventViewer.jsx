@@ -11,6 +11,7 @@ const EventViewer = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedOption, setSelectedOption] = useState("所有類別");
   const [filterEventViewerData, setFilterEventViewerData] = useState([]);
+  const [filterDataLength, setFilterDataLength] = useState(0);
 
   const searchOptions = ["所有類別", "類型", "訊息", "時間"];
 
@@ -22,7 +23,7 @@ const EventViewer = () => {
     }, 5000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [activePage, itemsPerPage]);
 
   // fetch PN 資料
   const getEventDatas = async () => {
@@ -45,9 +46,9 @@ const EventViewer = () => {
     return filterEventViewerData
       .filter(
         (data) =>
-          data.alert_type.includes(searchQuery) ||
-          data.message.includes(searchQuery) ||
-          data.created_at.includes(searchQuery)
+          data.alert_type?.includes(searchQuery) ||
+          data.message?.includes(searchQuery) ||
+          data.created_at?.includes(searchQuery)
       )
       .slice(startIndex, endIndex)
       .map((data) => (
@@ -69,30 +70,31 @@ const EventViewer = () => {
     switch (selectedOption) {
       case "類型":
         filteredData = eventViewer.filter((data) =>
-          data.alert_type.includes(query)
+          data.alert_type?.includes(query)
         );
         break;
       case "訊息":
         filteredData = eventViewer.filter((data) =>
-          data.message.includes(query)
+          data.message?.includes(query)
         );
         break;
       case "時間":
         filteredData = eventViewer.filter((data) =>
-          data.created_at.includes(query)
+          data.created_at?.includes(query)
         );
         break;
       default:
         filteredData = eventViewer.filter(
           (data) =>
-            data.alert_type.includes(query) ||
-            data.message.includes(query) ||
-            data.created_at.includes(query)
+            data.alert_type?.includes(query) ||
+            data.message?.includes(query) ||
+            data.created_at?.includes(query)
         );
         break;
     }
 
     setFilterEventViewerData(filteredData);
+    setFilterDataLength(filteredData.length);
   };
 
   // 定義處理每頁顯示筆數變更
@@ -141,7 +143,9 @@ const EventViewer = () => {
         {/* 分頁 */}
         <div className="pagination py-6 flex justify-end">
           <Pagination
-            totalItems={eventViewer.length}
+            totalItems={
+              filterDataLength ? filterDataLength : eventViewer.length
+            }
             itemsPerPage={itemsPerPage}
             activePage={activePage}
             onPageChange={setActivePage}
